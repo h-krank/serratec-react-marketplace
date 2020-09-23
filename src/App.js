@@ -13,7 +13,7 @@ function App() {
     <>
       <BrowserRouter>
         <Header />
-        <Search />
+        <Login />
       </BrowserRouter>
       
       <GlobalStyle />
