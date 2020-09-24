@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import api from '../../services/api'
 
+import { Form, Address } from './style'
+
+
 const Login = () => {
     const [name, setName] = useState('');
     const [user, setUser] = useState('');
@@ -19,33 +22,38 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        //Fix date format "1992-02-01T00:00:00Z"
+        //Fix date format "1992-02-01T00:00:00Z" ok (ghetto fix)
+        //Give user feedback about wrong fields
+        //Save to localStorage
         //Make pretty
         const cliente = {
-            'nome': name,
-            'usuario': user,
-            'cpf': cpf,
-            'email': email,
-            'dataNascimento': nascimento,
-            'endereco': {
-                'rua': rua,
-                'numero': numero,
-                'complemento': complemento,
-                'bairro': bairro,
-                'cidade': cidade,
-                'estado': estado,
-                'cep':cep
+            "nome": name,
+            "usuario": user,
+            "cpf": cpf,
+            "email": email,
+            "dataNascimento": nascimento + "T00:00:00Z",
+            "endereco": {
+                "rua": rua,
+                "numero": numero,
+                "complemento": complemento,
+                "bairro": bairro,
+                "cidade": cidade,
+                "estado": estado,
+                "cep": cep
             }
         }
         console.log(cliente)
-  
-        await api.post('cliente', cliente);
-        console.log('eita carai')
+
+        try {
+            await api.post('cliente', cliente);
+        } catch (error) {
+            console.log('handleSubmitError', error)
+        }
     }
 
 
     return (
-        <>
+        <Form>
             <form onSubmit={handleSubmit}>
                 <label htmlFor={'name'}>Nome</label>
                 <input
@@ -82,60 +90,63 @@ const Login = () => {
                     value={nascimento}
                     onChange={e => setNascimento(e.target.value)} />
 
-                <label htmlFor={'rua'}>Rua</label>
-                <input
-                    type="text"
-                    id='rua'
-                    value={rua}
-                    onChange={e => setRua(e.target.value)} />
+                <Address>
+                    <label htmlFor={'rua'}>Rua</label>
+                    <input
+                        type="text"
+                        id='rua'
+                        value={rua}
+                        onChange={e => setRua(e.target.value)} />
 
-                <label htmlFor={'numero'}>Número</label>
-                <input
-                    type="text"
-                    id='numero'
-                    value={numero}
-                    onChange={e => setNumero(e.target.value)} />
+                    <label htmlFor={'numero'}>Número</label>
+                    <input
+                        type="text"
+                        id='numero'
+                        value={numero}
+                        onChange={e => setNumero(e.target.value)} />
 
-                <label htmlFor={'cpf'}>Complemento</label>
-                <input
-                    type="text"
-                    id='complemento'
-                    value={complemento}
-                    onChange={e => setComplemento(e.target.value)} />
+                    <label htmlFor={'cpf'}>Complemento</label>
+                    <input
+                        type="text"
+                        id='complemento'
+                        value={complemento}
+                        onChange={e => setComplemento(e.target.value)} />
 
-                <label htmlFor={'bairro'}>Bairro</label>
-                <input
-                    type="text"
-                    id='bairro'
-                    value={bairro}
-                    onChange={e => setBairro(e.target.value)} />
-
-
-                <label htmlFor={'cidade'}>Cidade</label>
-                <input
-                    type="text"
-                    id='cidade'
-                    value={cidade}
-                    onChange={e => setCidade(e.target.value)} />
-
-                <label htmlFor={'estado'}>Estado</label>
-                <input
-                    type="text"
-                    id='estado'
-                    value={estado}
-                    onChange={e => setEstado(e.target.value)} />
+                    <label htmlFor={'bairro'}>Bairro</label>
+                    <input
+                        type="text"
+                        id='bairro'
+                        value={bairro}
+                        onChange={e => setBairro(e.target.value)} />
 
 
-                <label htmlFor={'cep'}>CEP</label>
-                <input
-                    type="text"
-                    id='cep'
-                    value={cep}
-                    onChange={e => setCep(e.target.value)} />
+                    <label htmlFor={'cidade'}>Cidade</label>
+                    <input
+                        type="text"
+                        id='cidade'
+                        value={cidade}
+                        onChange={e => setCidade(e.target.value)} />
+
+                    <label htmlFor={'estado'}>Estado</label>
+                    <input
+                        type="text"
+                        id='estado'
+                        value={estado}
+                        onChange={e => setEstado(e.target.value)} />
+
+
+                    <label htmlFor={'cep'}>CEP</label>
+                    <input
+                        type="text"
+                        id='cep'
+                        value={cep}
+                        onChange={e => setCep(e.target.value)} />
+                </Address>
+
 
                 <button type="submit">Enviar</button>
             </form>
-        </>
+        </Form>
     )
 
 }

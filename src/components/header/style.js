@@ -7,6 +7,12 @@ export const Container = styled.div `
     margin-bottom: 40px;
     border-bottom: 1px solid #ccc;
 
+    img{
+        width: 250px;
+        margin: 5px;
+
+    }
+
     ul{
         display:flex;
         list-style: none;

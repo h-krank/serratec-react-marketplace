@@ -1,15 +1,26 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom'
 
-import Dashboard from "../Pages/Dashboard"
-import Tarefas from "../Pages/Tarefas"
-import Login from "../Pages/Login"
+import Search from "../pages/search"
+import Login from "../pages/login"
+import Product from "../pages/product"
+import Dashboard from '../pages/dashboard'
+import Categoria from "../pages/dashboard/categoria"
+import Funcionario from "../pages/dashboard/funcionario"
+import Produto from "../pages/dashboard/produto"
+
 
 const Routes = () => (
     <Switch>
         <Route path="/" component={Login} exact/>
-        <Route path="/dashboard" component={Dashboard}/>
-        <Route path="/tarefas" component={Tarefas} />
+        <Route path="/search" component={Search}/>
+        <Route path="/product" component={Product}/>
+        <Route path="/dashboard/" component={Dashboard} exact/>
+        <Route path="/dashboard/categoria" component={Categoria}/>
+        <Route path="/dashboard/funcionario" component={Funcionario}/>
+        <Route path="/dashboard/produto" component={Produto}/>
+
+
     </Switch>
 )
 

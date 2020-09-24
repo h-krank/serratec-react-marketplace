@@ -79,4 +79,9 @@ export const Info = styled.div`
     h3{ 
         margin-top: auto;
     }
+
+    a {
+        color: black;
+        text-decoration: none;
+    }
 `
