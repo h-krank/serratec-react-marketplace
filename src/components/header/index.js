@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import logoImg from '../../assets/logo.jpeg'
 import { Container, Title } from './style'
 
@@ -6,7 +7,7 @@ const Header = ({ title }) => {
     return (
         <>
             <Container>
-                <img src={logoImg} alt="logo" />
+                <Link to="/search"><img src={logoImg} alt="logo" /></Link>
                 <ul>
                     <li>                      
                             Carrinho

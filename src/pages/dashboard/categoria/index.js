@@ -7,10 +7,12 @@ import { Categorias, Container, Form, CriarCategoria } from './style'
 
 const Categoria = () => {
     const [categorias, setCategorias] = useState([]);
+    const [categoriaId, setCategoriaId] = useState([]);
     const [categoriaNome, setCategoriaNome] = useState();
     const [categoriaDescricao, setCategoriaDescricao] = useState();
 
     const [criarCategoria, setCriarCategoria] = useState(false);
+    const [editarCategoria, setEditarCategoria] = useState(false);
 
     const loadCategorias = async () => {
         const response = await api.get('categoria');
@@ -25,7 +27,15 @@ const Categoria = () => {
         await api.delete(`categoria/${item.id}`)
         loadCategorias();
     }
-    
+
+    const editItem = (item) => {
+        setCategoriaId(item.id);
+        setCategoriaNome(item.nome);
+        setCategoriaDescricao(item.descricao);
+        setCriarCategoria(true);
+        setEditarCategoria(true);
+    }
+
     const handleCriarCategoria = async (e) => {
         e.preventDefault()
 
@@ -33,14 +43,38 @@ const Categoria = () => {
             nome: categoriaNome,
             descricao: categoriaDescricao
         }
-        await api.post('categoria', params)
+
+        try {
+            if (editarCategoria){
+                await api.put(`categoria/${categoriaId}`, params)
+            } else {
+                await api.post('categoria', params)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        
         loadCategorias();
+
+        //Clear fields
+        setCategoriaId('');
+        setCategoriaNome('');
+        setCategoriaDescricao('');
+
+        //Closes box
+        setEditarCategoria(false);
+        setCriarCategoria(false);
     }
 
     return (
         <Container>
             <Form>
-                <button onClick={() => setCriarCategoria(!criarCategoria)}>Criar Nova Categoria</button>
+                <button onClick={() => {
+                    setCriarCategoria(!criarCategoria);
+                    setEditarCategoria(false)
+                }}>
+                    Criar Nova Categoria
+                    </button>
 
                 {criarCategoria &&
                     <CriarCategoria >
@@ -65,7 +99,7 @@ const Categoria = () => {
                 <Categorias key={categoria.id}>
                     {categoria.nome} - {categoria.descricao}
                     <div>
-                        <FiEdit size='20px' />
+                        <FiEdit size='20px' onClick={() => editItem(categoria)} />
                         <FiDelete size='20px' onClick={() => removeItem(categoria)} />
                     </div>
                 </Categorias>

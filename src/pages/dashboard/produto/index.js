@@ -6,19 +6,26 @@ import { FiDelete, FiEdit } from "react-icons/fi";
 import { Produtos, Container, Form, CriarProduto } from './style'
 
 const Produto = () => {
+    //Produtos
     const [produtos, setProdutos] = useState([]);
+    const [produtoId, setProdutoId] = useState('');
     const [produtoNome, setProdutoNome] = useState('');
     const [produtoDescricao, setProdutoDescricao] = useState('');
     const [produtoValor, setProdutoValor] = useState('');
     const [produtoEstoque, setProdutoEstoque] = useState('');
+    const [produtoFabricacao, setProdutoFabricacao] = useState('');
 
-    const [categorias, setCategorias] = useState([])
+    //Categorias
+    const [categorias, setCategorias] = useState('')
     const [produtoCategoria, setCategoria] = useState('')
 
-
-
+    //Funcionarios
+    const [funcionarios, setFuncionarios] = useState('');
+    const [funcionario, setFuncionario] = useState('');
 
     const [criarProduto, setCriarProduto] = useState(false);
+    const [editarProduto, setEditarProduto] = useState(false);
+
 
     const loadProdutos = async () => {
         const response = await api.get('produto');
@@ -26,37 +33,92 @@ const Produto = () => {
     }
 
     const loadCategorias = async () => {
-        const response = await api.get('categoria')
-        setCategorias(response.data)
+        try {
+            const response = await api.get('categoria');
+            setCategorias(response.data)
+            setCategoria(`${response.data[0].id},${response.data[0].nome}`)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    const loadFuncionarios = async () => {
+        try {
+            const response = await api.get('funcionario')
+            setFuncionarios(response.data);
+            setFuncionario(`${response.data[0].id},${response.data[0].nome}`)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
         loadProdutos();
         loadCategorias();
+        loadFuncionarios();
     }, [])
 
     const removeItem = async (item) => {
-        await api.delete(`produto/${item.id}`)
-        loadProdutos();
+        try {
+            await api.delete(`produto/${item.id}`)
+            loadProdutos();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const editItem = (item) => {
+        setProdutoId(item.id);
+        setProdutoNome(item.nome);
+        setProdutoDescricao(item.descricao);
+        setProdutoValor(item.valor);
+        setProdutoEstoque(item.qtdEstoque);
+        setProdutoFabricacao(item.dataFabricacao);
+
+        setCriarProduto(true);
+        setEditarProduto(true);
     }
 
     const handleCriarProduto = async (e) => {
         e.preventDefault()
-        
+        const categoriaSelecionada = produtoCategoria.split(',');
+        const funcionarioSelecionado = funcionario.split(',');
+
         const params = {
             nome: produtoNome,
             descricao: produtoDescricao,
             qtdEstoque: produtoEstoque,
             valor: produtoValor,
-            idCategoria: produtoCategoria.id,
-            nomeCategoria: produtoCategoria.nome,
-            nomeFuncionario: "Joaquim Manoel",
-            dataFabricacao: "2019-10-01T00:00:00Z",
-            fotoLink: "http://residencia-ecommerce.us-east-1.elasticbeanstalk.com/produto/1/foto"
+            idCategoria: categoriaSelecionada[0],
+            nomeCategoria: categoriaSelecionada[1],
+            idFuncionario: funcionarioSelecionado[0],
+            nomeFuncionario: funcionarioSelecionado[1],
+            dataFabricacao: produtoFabricacao+"T00:00:00Z"
         }
-        console.log(params)
-        await api.post('produto', params)
+        try {
+            if (editarProduto){
+                await api.put(`produto/${produtoId}`, params)
+            }else{
+                await api.post('produto', params)
+            }
+            
+        } catch (error) {
+            
+        }
         loadProdutos();
+
+        //Clear fields
+        setProdutoId('');
+        setProdutoNome('');
+        setProdutoDescricao('');
+        setProdutoValor('');
+        setProdutoEstoque('');
+        setProdutoFabricacao('');
+
+        //Closes box
+        setEditarProduto(false);
+        setCriarProduto(false);
     }
 
     return (
@@ -90,15 +152,39 @@ const Produto = () => {
                                 onChange={e => setProdutoEstoque(e.target.value)}
                                 placeholder="Insira a quantidade do estoque do produto" />
 
-                            <select 
+                            <input
+                                type="text"
+                                onFocus={(e) => e.target.type='date'}
+                                onBlur={(e) => e.target.type='text'}
+                                value={produtoFabricacao}
+                                onChange={e => setProdutoFabricacao(e.target.value)}
+                                placeholder="Insira a data de fabricação do produto" />
+
+                            <select
                                 onChange={e => setCategoria(e.target.value)}
                                 value={produtoCategoria}>
+                                <option value="" disabled selected>Selecione uma categoria</option>
                                 {categorias.map(categoria => (
-                                    <option 
+                                    <option
                                         key={categoria.id}
-                                        value={produtoCategoria}
-                                        >
+                                        value={[categoria.id, categoria.nome]}
+                                    >
                                         {categoria.nome}
+                                    </option>
+                                    
+                                ))}
+                            </select>
+
+                            <select
+                                onChange={e => setFuncionario(e.target.value)}
+                                value={funcionario}>
+                                <option value="" disabled selected>Funcionário</option>
+                                {funcionarios.map(funcionario => (
+                                    <option
+                                        key={funcionario.id}
+                                        value={[funcionario.id, funcionario.nome]}
+                                    >
+                                        {funcionario.nome}
                                     </option>
                                 ))}
                             </select>
@@ -113,7 +199,7 @@ const Produto = () => {
                 <Produtos key={produto.id}>
                     {produto.nome} - {produto.descricao} | Valor: R${produto.valor} | Estoque: {produto.qtdEstoque}
                     <div>
-                        <FiEdit size='20px' />
+                        <FiEdit size='20px' onClick={() => editItem(produto)}/>
                         <FiDelete size='20px' onClick={() => removeItem(produto)} />
                     </div>
                 </Produtos>
