@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom'
 import { Container, Filter, Price, Product, ProductSection, Info } from './style';
 
@@ -6,10 +6,10 @@ import { Container, Filter, Price, Product, ProductSection, Info } from './style
 import api from '../../services/api'
 /*
 TODO: -Improve price filter
-        -should not be able to set price below 0
-        -should not be able to set minPrice above maxPrice and vice versa
-        -should reset to infinty when empty
-        -add easier way to clear filter
+        -Impedir números negativos
+        -Preço minimo não pode ser maior que preço máximo e vice versa
+        -Deve voltar ao padrão quando vazio
+        -Adicionar forma mais simples de limpar o filtro
 */
 
 const Products = () => {
@@ -20,7 +20,8 @@ const Products = () => {
   const [maxValue, setMaxValue] = useState(Infinity);
 
 
-  const loadProducts = async () => {
+  const loadProducts = useCallback(
+    async () => {
     const response = await api.get("produto")
 
     if (filters.length > 0)
@@ -29,7 +30,7 @@ const Products = () => {
     response.data = response.data.filter(product => product.valor <= maxValue && product.valor >= minValue)
 
     setProducts(response.data)
-  }
+  }, [filters, maxValue, minValue] )
 
 
   const loadCategories = async () => {
@@ -42,7 +43,7 @@ const Products = () => {
   useEffect(() => {
     loadProducts();
     loadCategories();
-  }, [filters])
+  }, [loadProducts, filters])
 
 
   const addFilter = (e) => {

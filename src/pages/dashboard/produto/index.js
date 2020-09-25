@@ -163,7 +163,7 @@ const Produto = () => {
                             <select
                                 onChange={e => setCategoria(e.target.value)}
                                 value={produtoCategoria}>
-                                <option value="" disabled selected>Selecione uma categoria</option>
+                                <option value="" disabled>Selecione uma categoria</option>
                                 {categorias.map(categoria => (
                                     <option
                                         key={categoria.id}
@@ -177,8 +177,8 @@ const Produto = () => {
 
                             <select
                                 onChange={e => setFuncionario(e.target.value)}
-                                value={funcionario}>
-                                <option value="" disabled selected>Funcionário</option>
+                                value={funcionario} >
+                                <option value="" disabled >Funcionário</option>
                                 {funcionarios.map(funcionario => (
                                     <option
                                         key={funcionario.id}

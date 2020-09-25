@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { Container, Produto, Info, Compra } from './style'
 
 import api from '../../services/api'
@@ -9,7 +9,8 @@ const Product = () => {
     const link = window.location.href;
     let id = link.split('/').pop();
 
-    const loadInfo = async () => {
+    const loadInfo = useCallback( 
+    async () => {
         try {
             const response = await api.get(`produto/${id.length ? id : '0'}`)
 
@@ -18,11 +19,11 @@ const Product = () => {
             console.log(error)
             setNotFound(true);
         }
-    }
+    }, [id])
 
     useEffect(() => {
         loadInfo();
-      }, [])
+      }, [loadInfo])
 
 
     return (

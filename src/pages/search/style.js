@@ -34,6 +34,11 @@ export const ProductSection = styled.div`
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
 `
 
 export const Product = styled.div `
@@ -80,8 +85,5 @@ export const Info = styled.div`
         margin-top: auto;
     }
 
-    a {
-        color: black;
-        text-decoration: none;
-    }
+    
 `
