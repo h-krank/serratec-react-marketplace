@@ -33,7 +33,7 @@ export const ProductSection = styled.div`
     width: 70%;
     margin-left: auto;
     margin-right: auto;
-    justify-content: center;
+    
 
     a {
         text-decoration: none;

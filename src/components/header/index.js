@@ -9,7 +9,7 @@ const Header = ({ title }) => {
             <Container>
                 <Link to="/search"><img src={logoImg} alt="logo" /></Link>
                 <ul>
-                    <li>                      
+                    <li>
                             Carrinho
                     </li>
                     <li>                        
