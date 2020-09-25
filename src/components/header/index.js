@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
-import logoImg from '../../assets/logo.jpeg'
+import logoImg from '../../assets/amazonia.jpg'
 import { Container, Title } from './style'
 
 const Header = ({ title }) => {
@@ -10,7 +10,7 @@ const Header = ({ title }) => {
                 <Link to="/search"><img src={logoImg} alt="logo" /></Link>
                 <ul>
                     <li>
-                            Carrinho
+                            <Link to='/cart'>Carrinho</Link>
                     </li>
                     <li>                        
                             Sair            

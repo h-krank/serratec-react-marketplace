@@ -85,6 +85,7 @@ const Produto = () => {
         const categoriaSelecionada = produtoCategoria.split(',');
         const funcionarioSelecionado = funcionario.split(',');
 
+
         const params = {
             nome: produtoNome,
             descricao: produtoDescricao,
@@ -94,8 +95,10 @@ const Produto = () => {
             nomeCategoria: categoriaSelecionada[1],
             idFuncionario: funcionarioSelecionado[0],
             nomeFuncionario: funcionarioSelecionado[1],
-            dataFabricacao: produtoFabricacao+"T00:00:00Z"
+            dataFabricacao: "2020-09-01T00:00:00Z"
         }
+        console.log(params, produtoId)
+
         try {
             if (editarProduto){
                 await api.put(`produto/${produtoId}`, params)

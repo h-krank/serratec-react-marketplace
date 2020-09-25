@@ -8,6 +8,7 @@ import Dashboard from '../pages/dashboard'
 import Categoria from "../pages/dashboard/categoria"
 import Funcionario from "../pages/dashboard/funcionario"
 import Produto from "../pages/dashboard/produto"
+import Cart from '../pages/cart'
 
 
 const Routes = () => (
@@ -19,8 +20,7 @@ const Routes = () => (
         <Route path="/dashboard/categoria" component={Categoria}/>
         <Route path="/dashboard/funcionario" component={Funcionario}/>
         <Route path="/dashboard/produto" component={Produto}/>
-
-
+        <Route path="/cart" component={Cart}/>
     </Switch>
 )
 
