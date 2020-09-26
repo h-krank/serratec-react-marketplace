@@ -14,8 +14,8 @@ export const Product = styled.div `
     padding: 10px;
 
     img{
-        width: 150px;
-        height: 150px;
+        width: 75px;
+        height: 75px;
         
         &:hover{
             cursor: pointer;
@@ -26,6 +26,15 @@ export const Product = styled.div `
 
     & + div {
         border-top: 1px solid #ccc;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+
+        :hover {
+            opacity: 75%;
+        }
     }
 `
 

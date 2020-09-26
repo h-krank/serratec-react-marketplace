@@ -6,31 +6,33 @@ import { Container, Filter, Price, Product, ProductSection, Info } from './style
 import api from '../../services/api'
 /*
 TODO: -Improve price filter
-        -Impedir números negativos
-        -Preço minimo não pode ser maior que preço máximo e vice versa
         -Deve voltar ao padrão quando vazio
         -Adicionar forma mais simples de limpar o filtro
 */
 
-const Products = () => {
+const Search = () => {
   const [products, setProducts] = useState(['']);
   const [categories, setCategories] = useState([]);
   const [filters, setFilters] = useState([]);
   const [minValue, setMinValue] = useState(-Infinity);
   const [maxValue, setMaxValue] = useState(Infinity);
 
+  let link = window.location.href;
+  link = link.split('q=')[1];
+  let query = (link.split('&'))
 
   const loadProducts = useCallback(
     async () => {
-    const response = await api.get("produto")
+      const response = await api.get("produto")
 
-    if (filters.length > 0)
-      response.data = response.data.filter(product => filters.includes(product.nomeCategoria))
+      if (filters.length > 0) {
+        response.data = response.data.filter(product => filters.includes(product.nomeCategoria))
+      }
 
-    response.data = response.data.filter(product => product.valor <= maxValue && product.valor >= minValue)
+      response.data = response.data.filter(product => product.valor <= maxValue && product.valor >= minValue)
 
-    setProducts(response.data)
-  }, [filters, maxValue, minValue] )
+      setProducts(response.data)
+    }, [filters, maxValue, minValue, query])
 
 
   const loadCategories = async () => {
@@ -43,7 +45,7 @@ const Products = () => {
   useEffect(() => {
     loadProducts();
     loadCategories();
-  }, [loadProducts, filters])
+  }, [filters])
 
 
   const addFilter = (e) => {
@@ -54,6 +56,10 @@ const Products = () => {
     }
 
     console.log(filters)
+  }
+
+  function convertPrice(value) {
+    return Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
   }
 
   return (
@@ -79,12 +85,15 @@ const Products = () => {
           <input
             type="number"
             value={minValue}
+            min='0'
+            max={maxValue}
             onChange={e => setMinValue(e.target.value)}
             placeholder="min"
           />
           <input
             type="number"
             value={maxValue}
+            min={minValue}
             onChange={e => setMaxValue(e.target.value)}
             placeholder="max"
           />
@@ -104,27 +113,32 @@ const Products = () => {
 
             <Product key={product.id}>
               <Link to={`/product/${product.id}`}>
-                <img src={product.fotoLink}
+                <img
+                  src={product.fotoLink}
                   alt={product.nome}
-                  onError={(e) => { e.target.onerror = null; e.target.src = "https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png" }}>
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png"
+                  }}>
                 </img>
               </Link>
 
               <Info>
-              <Link to={`/product/${product.id}`}><p className="nome">{product.nome} - {product.descricao}</p></Link>
+                <Link to={`/product/${product.id}`}>
+                  <p className="nome">{product.nome} - {product.descricao}</p>
+                </Link>
                 <p className="categoria">{product.nomeCategoria}</p>
-                <h3>R${product.valor}</h3>
+                <h3>{convertPrice(product.valor)}</h3>
               </Info>
 
             </Product>
           )
           )
         }
-
       </ProductSection>
     </Container>
 
   )
 }
 
-export default Products
+export default Search

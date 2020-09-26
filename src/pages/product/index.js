@@ -6,6 +6,7 @@ import api from '../../services/api'
 
 const Product = () => {
     const [product, setProduct] = useState('');
+    const [qtdProduto, setQtdProduto] = useState(1);
     const [notFound, setNotFound] = useState(false);
     const link = window.location.href;
     let id = link.split('/').pop();
@@ -32,19 +33,8 @@ const Product = () => {
         if (localStorage.getItem('@AMAZONIA:cart')) {
             cart = JSON.parse(localStorage.getItem('@AMAZONIA:cart'))
         }
-
-        let set = new Set()
-        cart.map(item => set.add(JSON.stringify(item)))
-        const prevLen = set.size;
-
-        set.add(JSON.stringify({ ...product, qtd: 1 }))
-        const currentLen = set.size
-
-        if (currentLen !== prevLen) {
-            cart.push({ ...product, qtd: 1 })
-        }else{
-            alert('Produto já adicionado')
-        }
+        cart = cart.filter(item => item.id !== product.id)
+        cart.push({ ...product, qtd: qtdProduto })
 
         localStorage.setItem('@AMAZONIA:cart', JSON.stringify(cart))
     }
@@ -69,10 +59,22 @@ const Product = () => {
                         12x sem juros de <strong>R${(product.valor / 12).toFixed(2)}</strong>
                     </p>
                     <p>Quantidade em estoque: {product.qtdEstoque ? product.qtdEstoque : 'Indisponivel'}</p>
-                    <Link to='/cart'>
-                        <button onClick={addToCart}>
-                            Adicionar ao carrinho
-                    </button></Link>
+                    <div>
+                        <Link to='/cart'>
+                            <button onClick={addToCart}>
+                                Adicionar ao carrinho
+                        </button>
+                        </Link>
+                        <input
+                            id='qtdProduto'
+                            type='number'
+                            value={qtdProduto}
+                            min='1'
+                            max={product.qtdEstoque}
+                            onChange={e => setQtdProduto(e.target.value)}
+                            placeholder='qtd' />
+                    </div>
+
                 </Compra>
             </Container>
     )

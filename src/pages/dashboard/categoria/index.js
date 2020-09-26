@@ -45,7 +45,7 @@ const Categoria = () => {
         }
 
         try {
-            if (editarCategoria){
+            if (editarCategoria) {
                 await api.put(`categoria/${categoriaId}`, params)
             } else {
                 await api.post('categoria', params)
@@ -53,7 +53,7 @@ const Categoria = () => {
         } catch (error) {
             console.log(error)
         }
-        
+
         loadCategorias();
 
         //Clear fields
@@ -72,9 +72,7 @@ const Categoria = () => {
                 <button onClick={() => {
                     setCriarCategoria(!criarCategoria);
                     setEditarCategoria(false)
-                }}>
-                    Criar Nova Categoria
-                    </button>
+                }}> Administrar Categoria </button>
 
                 {criarCategoria &&
                     <CriarCategoria >

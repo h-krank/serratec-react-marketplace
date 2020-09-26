@@ -68,7 +68,7 @@ const Funcionario = () => {
     return (
         <Container>
             <Form>
-                <button onClick={() => setCriarFuncionario(!criarFuncionario)}>Criar Novo Funcionario</button>
+                <button onClick={() => setCriarFuncionario(!criarFuncionario)}>Administrar Funcionario</button>
 
                 {criarFuncionario &&
                     <CriarFuncionario >

@@ -26,7 +26,6 @@ const Cart = () => {
         <Container>
 
             {carrinho.map(product => (
-
                 <Product key={product.id}>
                     <Link to={`/product/${product.id}`}>
                         <img src={product.fotoLink}
@@ -38,6 +37,7 @@ const Cart = () => {
                     <Info>
                         <Link to={`/product/${product.id}`}><p className="nome">{product.nome} - {product.descricao}</p></Link>
                         <p className="categoria">{product.nomeCategoria}</p>
+                        <h5>x{product.qtd}</h5>
                         <h3>R${product.valor}</h3>
                     </Info>
 

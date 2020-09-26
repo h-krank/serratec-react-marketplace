@@ -75,6 +75,7 @@ const Produto = () => {
         setProdutoValor(item.valor);
         setProdutoEstoque(item.qtdEstoque);
         setProdutoFabricacao(item.dataFabricacao);
+        setFuncionario(`${item.idFuncionario},${item.nomeFuncionario}`)
 
         setCriarProduto(true);
         setEditarProduto(true);
@@ -85,7 +86,6 @@ const Produto = () => {
         const categoriaSelecionada = produtoCategoria.split(',');
         const funcionarioSelecionado = funcionario.split(',');
 
-
         const params = {
             nome: produtoNome,
             descricao: produtoDescricao,
@@ -95,7 +95,7 @@ const Produto = () => {
             nomeCategoria: categoriaSelecionada[1],
             idFuncionario: funcionarioSelecionado[0],
             nomeFuncionario: funcionarioSelecionado[1],
-            dataFabricacao: "2020-09-01T00:00:00Z"
+            dataFabricacao: produtoFabricacao + "T00:00:00Z"
         }
         console.log(params, produtoId)
 
@@ -127,7 +127,7 @@ const Produto = () => {
     return (
         <Container>
             <Form>
-                <button onClick={() => setCriarProduto(!criarProduto)}>Criar Novo Produto</button>
+                <button onClick={() => {setCriarProduto(!criarProduto); setEditarProduto(false)}}>Administrar Produto</button>
 
                 {criarProduto &&
                     <CriarProduto >
@@ -177,7 +177,7 @@ const Produto = () => {
                                     
                                 ))}
                             </select>
-
+                            {!editarProduto &&
                             <select
                                 onChange={e => setFuncionario(e.target.value)}
                                 value={funcionario} >
@@ -191,7 +191,7 @@ const Produto = () => {
                                     </option>
                                 ))}
                             </select>
-
+                            }
 
                             <button type='submit'>Enviar</button>
                         </form>

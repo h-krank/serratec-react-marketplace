@@ -21,8 +21,7 @@ export const Produto = styled.div `
 
     img{
         width: 300px;
-        height: 300px;
-                    
+        height: 300px;       
     }
 
     button {
@@ -56,6 +55,7 @@ export const Compra = styled.div`
     flex-direction:column;
     margin: 10px;
     margin-left: auto;
+    min-width:30%;
     
     button{
         margin: 5px;
@@ -64,6 +64,11 @@ export const Compra = styled.div`
     #parcela{
         margin-top: 5px;
         margin-bottom: auto;
+    }
+
+    #qtdProduto{
+        width: 60px;
+        margin-left: 5px;
     }
     
     

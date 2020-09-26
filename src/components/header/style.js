@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
-export const Container = styled.div `
+export const Container = styled.div`
     display: flex;
-    justify-content:space-between;
-    align-items: baseline;
+
+
     margin-bottom: 40px;
     border-bottom: 1px solid #ccc;
 
@@ -13,9 +13,41 @@ export const Container = styled.div `
 
     }
 
+    form {
+        display: flex;
+        margin-top: 20px;
+        
+        input {
+            padding: 10px;
+            margin-left: 200px;
+            width: 500px;
+            height: 40px;
+            border-radius: 5px 0px 0px 5px;
+            border: 1px solid #ccc;
+            color: #333;
+        }
+
+        button {
+            width: 50px;
+            height: 40px;
+            background-color: #fff;
+            color: black;
+            border: 1px solid #ccc;
+            border-left: none;
+            border-radius: 0px 5px 5px 0px;
+
+            &:hover {
+                background-color: #fffeee;
+            }
+        }
+    }
+
     ul{
         display:flex;
         list-style: none;
+        margin: 10px;
+        margin-left: auto;
+        margin-top: auto;
     }
     li {
         font-size: 14px;

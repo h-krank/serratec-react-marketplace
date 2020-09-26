@@ -2,6 +2,7 @@ import React from 'react';
 import {Switch, Route} from 'react-router-dom'
 
 import Search from "../pages/search"
+import Home from "../pages/home"
 import Login from "../pages/login"
 import Product from "../pages/product"
 import Dashboard from '../pages/dashboard'
@@ -14,6 +15,7 @@ import Cart from '../pages/cart'
 const Routes = () => (
     <Switch>
         <Route path="/" component={Login} exact/>
+        <Route path="/home" component={Home}/>
         <Route path="/search" component={Search}/>
         <Route path="/product" component={Product}/>
         <Route path="/dashboard/" component={Dashboard} exact/>
