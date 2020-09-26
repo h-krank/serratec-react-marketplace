@@ -1,33 +1,25 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Container, Filter, Price, Product, ProductSection, Info } from './style';
-
 
 import api from '../../services/api'
 
+
 const Search = () => {
+  const history = useHistory();
   const [products, setProducts] = useState(['']);
   const [categories, setCategories] = useState([]);
   const [filters, setFilters] = useState([]);
   const [minValue, setMinValue] = useState(-Infinity);
   const [maxValue, setMaxValue] = useState(Infinity);
 
-  const [query, setQuery] = useState('');
-
-  const loadQuery = () => {
-    try{
-      let link = window.location.href.toLowerCase().split('q=')[1];
-      let q = link.split('&')
-      setQuery(q)
-    } catch (error){
-      console.log(error)
-    }
-  }
-
+  const [query, setQuery] = useState([]);
+ 
   const loadProducts = useCallback(
     async () => {
       const response = await api.get("produto")
-      loadQuery();      
+      const query = history.location.search.replace('?', '').split('&')
+      setQuery(query)
       
       if (query.length > 0) {
         response.data = response.data.filter(product => (
@@ -46,7 +38,7 @@ const Search = () => {
       ))
 
       setProducts(response.data)
-    }, [filters, maxValue, minValue, query])
+    }, [filters, maxValue, minValue])
 
 
   const loadCategories = async () => {
@@ -55,11 +47,12 @@ const Search = () => {
     setCategories(response.data);
 
   }
+  
 
   useEffect(() => {
     loadProducts();
     loadCategories();
-  }, [filters, query, loadProducts])
+  }, [filters, loadProducts, history.location])
 
 
   const addFilter = (e) => {
@@ -69,7 +62,6 @@ const Search = () => {
       setFilters(filters.filter(f => f !== e.value))
     }
 
-    console.log(filters)
   }
 
   function convertPrice(value) {
@@ -122,6 +114,7 @@ const Search = () => {
       </Filter>
 
       <ProductSection>
+        <p><strong>Busca: </strong>{query.join(' ')}</p>
         {!products.length ? "Nenhum produto encontrado :(" :
           products.map(product => (
 

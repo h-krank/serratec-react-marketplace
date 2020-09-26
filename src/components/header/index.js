@@ -5,6 +5,7 @@ import { Container, Title } from './style'
 import { FiSearch } from 'react-icons/fi';
 
 
+
 const Header = ({ title }) => {
     const history = useHistory();
     const [query, setQuery] = useState('');
@@ -15,8 +16,10 @@ const Header = ({ title }) => {
                 <Link to="/home"><img src={logoImg} alt="logo" /></Link>
                 <form onSubmit={(e) => {
                     e.preventDefault();
-                    setQuery('');
-                    history.push(`/search?q=${query.split(' ').join('&')}`)
+                    history.push({
+                        pathname: '/search',
+                        search: query.split(' ').join('&')
+                    })
                     }}>
                     <input 
                         type="text" 
