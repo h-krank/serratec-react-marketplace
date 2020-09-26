@@ -17,17 +17,31 @@ const Search = () => {
   const [minValue, setMinValue] = useState(-Infinity);
   const [maxValue, setMaxValue] = useState(Infinity);
 
-  let link = window.location.href;
-  link = link.split('q=')[1];
-  let query = (link.split('&'))
+  const [query, setQuery] = useState('');
+
+  const loadQuery = () => {
+    try{
+      let link = window.location.href.toLowerCase().split('q=')[1];
+      let q = link.split('&')
+      setQuery(q)
+    } catch (error){
+      console.log(error)
+    }
+  }
 
   const loadProducts = useCallback(
     async () => {
       const response = await api.get("produto")
+      loadQuery();      
+      
+      if (query.length > 0) {
+        response.data = response.data.filter(product => query.some(q => product.nome.toLowerCase().includes(q)))
+      }
 
       if (filters.length > 0) {
         response.data = response.data.filter(product => filters.includes(product.nomeCategoria))
       }
+
 
       response.data = response.data.filter(product => product.valor <= maxValue && product.valor >= minValue)
 
@@ -45,7 +59,7 @@ const Search = () => {
   useEffect(() => {
     loadProducts();
     loadCategories();
-  }, [filters])
+  }, [filters, query])
 
 
   const addFilter = (e) => {
