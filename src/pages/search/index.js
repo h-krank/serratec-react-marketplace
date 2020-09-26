@@ -4,11 +4,6 @@ import { Container, Filter, Price, Product, ProductSection, Info } from './style
 
 
 import api from '../../services/api'
-/*
-TODO: -Improve price filter
-        -Deve voltar ao padrão quando vazio
-        -Adicionar forma mais simples de limpar o filtro
-*/
 
 const Search = () => {
   const [products, setProducts] = useState(['']);
@@ -35,15 +30,20 @@ const Search = () => {
       loadQuery();      
       
       if (query.length > 0) {
-        response.data = response.data.filter(product => query.some(q => product.nome.toLowerCase().includes(q)))
+        response.data = response.data.filter(product => (
+          query.some(q => product.nome.toLowerCase().includes(q))
+        ))
       }
 
       if (filters.length > 0) {
-        response.data = response.data.filter(product => filters.includes(product.nomeCategoria))
+        response.data = response.data.filter(product => (
+          filters.includes(product.nomeCategoria)
+        ))
       }
 
-
-      response.data = response.data.filter(product => product.valor <= maxValue && product.valor >= minValue)
+      response.data = response.data.filter(product => (
+        product.valor <= maxValue && product.valor >= minValue
+      ))
 
       setProducts(response.data)
     }, [filters, maxValue, minValue, query])
@@ -59,7 +59,7 @@ const Search = () => {
   useEffect(() => {
     loadProducts();
     loadCategories();
-  }, [filters, query])
+  }, [filters, query, loadProducts])
 
 
   const addFilter = (e) => {

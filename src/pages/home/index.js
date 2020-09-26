@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom'
-import { Container, Filter, Price, Product, ProductSection, Info } from './style';
+import { Container, Product, ProductSection, Info } from './style';
 
 
 import api from '../../services/api'
@@ -22,8 +22,7 @@ const Home = () => {
 
     useEffect(() => {
         loadProducts();
-
-    }, [])
+    }, [loadProducts])
 
 
     function convertPrice(value) {
@@ -37,7 +36,7 @@ const Home = () => {
                 {!products.length ? "Nenhum produto encontrado :(" :
                     products.map(product => (
 
-                        <Product key={product.id}>
+                        <Product key={product.id + product.nome}>
                             <Link to={`/product/${product.id}`}>
                                 <img src={product.fotoLink}
                                     alt={product.nome}

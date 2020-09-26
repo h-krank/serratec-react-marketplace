@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 
 export const Container = styled.div `
-    
+    width: 50%; 
+    margin-left:auto;
+    margin-right: auto;
 
 `
 
 
 export const Product = styled.div `
     display: flex;
-    width: 50%;
-    margin-left:auto;
-    margin-right: auto;
     padding: 10px;
 
     img{
@@ -36,6 +35,15 @@ export const Product = styled.div `
             opacity: 75%;
         }
     }
+
+    svg {
+        margin: 5px;
+        margin-left: auto;
+
+        :hover{
+            cursor: pointer;
+        }
+    }
 `
 
 export const Info = styled.div`
@@ -56,4 +64,17 @@ export const Info = styled.div`
         margin-top: auto;
     }
 
+`
+
+export const CartInfo = styled.div`
+    display: flex;
+    border-top: 1px solid #ccc;
+    h4{
+        margin-top: 20px;
+    }
+
+    a{
+        margin: 10px;
+        margin-left: auto;
+    }
 `

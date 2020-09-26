@@ -10,6 +10,7 @@ import Categoria from "../pages/dashboard/categoria"
 import Funcionario from "../pages/dashboard/funcionario"
 import Produto from "../pages/dashboard/produto"
 import Cart from '../pages/cart'
+import Checkout from '../pages/checkout'
 
 
 const Routes = () => (
@@ -23,6 +24,7 @@ const Routes = () => (
         <Route path="/dashboard/funcionario" component={Funcionario}/>
         <Route path="/dashboard/produto" component={Produto}/>
         <Route path="/cart" component={Cart}/>
+        <Route path="/checkout" component={Checkout}/>
     </Switch>
 )
 
