@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link, useHistory } from 'react-router-dom'
-import { Container, Filter, Price, ProductSection, Info } from './style';
+import { useHistory } from 'react-router-dom'
+import { Container, Filter, Price, ProductSection } from './style';
 
 import Product from '../../components/product'
 
@@ -45,9 +45,7 @@ const Search = () => {
 
   const loadCategories = async () => {
     const response = await api.get("categoria");
-
     setCategories(response.data);
-
   }
 
 
@@ -66,10 +64,6 @@ const Search = () => {
 
   }
 
-  function convertPrice(value) {
-    return Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-  }
-
   return (
     <Container>
       <Filter>
@@ -85,7 +79,6 @@ const Search = () => {
               value={category.nome} />
             <label htmlFor={category.id}>{category.nome}</label>
           </div>
-
         ))}
 
         <h4>Preço</h4>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiX } from 'react-icons/fi'
+import { FiX, FiChevronUp, FiChevronDown } from 'react-icons/fi'
 
-import { Container, Info, CartInfo, Item } from './style'
+import { Container, CartInfo, Item } from './style'
 
 import Product from '../../components/product'
 
@@ -36,6 +36,30 @@ const Cart = () => {
         handleCarrinho();
     }
 
+    const addQtd = (id) => {
+        const newCart = carrinho.map(product => {
+
+            if (product.id === id && product.qtd < product.qtdEstoque) {
+                product.qtd++
+            }
+            return product
+        })
+        setCarrinho(newCart)
+        localStorage.setItem('@AMAZONIA:cart', JSON.stringify(newCart))
+    }
+
+    const removeQtd = (id) => {
+        const newCart = carrinho.map(product => {
+
+            if (product.id === id && product.qtd > 1) {
+                product.qtd--
+            }
+            return product
+        })
+        setCarrinho(newCart)
+        localStorage.setItem('@AMAZONIA:cart', JSON.stringify(newCart))
+    }
+
 
     useEffect(() => {
         handleCarrinho();
@@ -48,7 +72,19 @@ const Cart = () => {
                     <>
                         <Item>
                             <Product key={product.id} product={product} />
-                            <FiX onClick={e => removeItem(product.id)} />
+                            <div className='item-right'>
+                                <FiX onClick={e => removeItem(product.id)} />
+                                <div className="product-qtd">
+                                    <div>
+                                        <FiChevronUp size='12px' onClick={() => addQtd(product.id)} />
+                                        <FiChevronDown size='12px' onClick={() => removeQtd(product.id)} />
+
+                                    </div>
+
+                                    <h4>x{product.qtd}</h4>
+
+                                </div>
+                            </div>
                         </Item>
                         <hr style={{ color: '#eee' }} />
                     </>
@@ -56,7 +92,13 @@ const Cart = () => {
                 ))}
                 <CartInfo>
                     <h4>Total:{loadCartInfo()}</h4>
-                    <Link to="/checkout"><button>Finalizar compra</button></Link>
+                    <Link to={{
+                        pathname: '/checkout',
+                        state: {
+                            finished: true
+                        }
+                    }}><button>Finalizar compra</button>
+                    </Link>
                 </CartInfo>
 
             </Container>

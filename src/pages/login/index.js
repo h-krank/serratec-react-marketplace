@@ -22,10 +22,8 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        //Fix date format "1992-02-01T00:00:00Z" ok (ghetto fix)
         //Give user feedback about wrong fields
         //Save to localStorage
-        //Make pretty
         const cliente = {
             "nome": name,
             "usuario": user,

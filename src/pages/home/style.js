@@ -5,9 +5,14 @@ export const Container = styled.div`
 `
 
 export const Info = styled.div`
+    display: flex;
+    flex-direction: column;
+    
+
     a {
         text-decoration: none;
         color: black;
+        
 
         :hover {
             opacity: 75%;
@@ -27,13 +32,14 @@ export const ProductSection = styled.div`
 export const Produto = styled.div`
     display: flex;
     flex-direction: column;
-    border: 1px solid #ccc;
-    border-right: 1px solid #ccc;
     height: 350px;
-    width: 270px;
+    width: 250px;
     justify-items: center;
     align-items: center;
     text-align: center;
+    border: 1px solid #ccc;
+    border-top: 0;
+    
 
     margin: 20px;   
 
@@ -41,10 +47,8 @@ export const Produto = styled.div`
         align-self: center;
         height: 250px;
         width: 250px;
-        padding-top: 10px;
-        padding-bottom: 5px;
-        border-bottom: 1px solid #ccc;
         color: black;
+        border: 1px solid #ccc;
 
     }
     
@@ -55,12 +59,20 @@ export const Produto = styled.div`
     }
 
     h3{
-        justify-self: flex-end;        
+        width: 100%;
+        padding: 10px;
+        
+        
+        margin-top: auto;    
+
+        :hover{
+            opacity: .9;
+        }
+        
     }
 
     &:hover{
-            cursor:pointer;
-        }
-
-
+        cursor:pointer;
+    }
+    
 `

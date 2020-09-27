@@ -29,7 +29,7 @@ const Home = () => {
             <ProductSection>
                 {!products.length ? "Nenhum produto encontrado :(" :
                     products.map(product => (
-                        
+
                         <Produto key={product.id + product.nome}>
                             <Link to={`/product/${product.id}`}>
                                 <img src={product.fotoLink}
@@ -42,9 +42,9 @@ const Home = () => {
                                 <Link to={`/product/${product.id}`}>
                                     <p className="nome">{product.nome} - {product.descricao}</p>
                                 </Link>
-                                <h3>{convertPrice(product.valor)}</h3>
-                            </Info>
 
+                            </Info>
+                                <h3>{convertPrice(product.valor)}</h3>
                         </Produto>
                     )
                     )

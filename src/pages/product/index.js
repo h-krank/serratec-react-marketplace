@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
-import { Container, Info, Compra } from './style'
+import { Container, Compra } from './style'
 import Product from '../../components/product'
 
 import api from '../../services/api'
@@ -44,8 +44,8 @@ const ProductPage = () => {
     return (
         notFound ? "Produto não encontrado :(" :
             <Container>
-                <Product product={product}/>
-                
+                <Product product={product} />
+
                 <Compra>
                     <p id='parcela'>
                         12x sem juros de <strong>R${(product.valor / 12).toFixed(2)}</strong>
@@ -66,7 +66,6 @@ const ProductPage = () => {
                             onChange={e => setQtdProduto(e.target.value)}
                             placeholder='qtd' />
                     </div>
-
                 </Compra>
             </Container>
     )

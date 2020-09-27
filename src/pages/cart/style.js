@@ -17,15 +17,40 @@ export const Container = styled.div `
 
 export const Item = styled.div`
     display: flex;
-    
-    svg {
-        margin: 10px;
-        margin-left: auto;
 
-        :hover{
-            cursor: pointer;
+    .item-right {
+        display: flex;
+        flex-direction: column;
+        margin-left: auto;
+        
+        svg {
+            margin: 5px;
+
+            margin-left: auto;
+
+            :hover{
+                cursor: pointer;
+            }
         }
+
+        .product-qtd{
+            display: flex;
+            margin-top: auto;
+            
+            svg{
+                display: flex;
+                margin-top: auto;
+            }
+
+            h4{
+                margin: 8px;
+                margin-left: 5px;
+                margin-top: auto;
+            }
+        }
+
     }
+    
 `
 
 
