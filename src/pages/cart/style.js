@@ -4,8 +4,30 @@ export const Container = styled.div `
     width: 50%; 
     margin-left:auto;
     margin-right: auto;
+    svg {
+        margin: 5px;
+        margin-left: auto;
+
+        :hover{
+            cursor: pointer;
+        }
+    }
 
 `
+
+export const Item = styled.div`
+    display: flex;
+    
+    svg {
+        margin: 10px;
+        margin-left: auto;
+
+        :hover{
+            cursor: pointer;
+        }
+    }
+`
+
 
 
 export const Product = styled.div `
@@ -36,14 +58,7 @@ export const Product = styled.div `
         }
     }
 
-    svg {
-        margin: 5px;
-        margin-left: auto;
-
-        :hover{
-            cursor: pointer;
-        }
-    }
+    
 `
 
 export const Info = styled.div`
@@ -68,7 +83,6 @@ export const Info = styled.div`
 
 export const CartInfo = styled.div`
     display: flex;
-    border-top: 1px solid #ccc;
     h4{
         margin-top: 20px;
     }

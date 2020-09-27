@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
-import { Container, Produto, Info, Compra } from './style'
+import { Container, Info, Compra } from './style'
+import Product from '../../components/product'
 
 import api from '../../services/api'
 
-const Product = () => {
+const ProductPage = () => {
     const [product, setProduct] = useState('');
     const [qtdProduto, setQtdProduto] = useState(1);
     const [notFound, setNotFound] = useState(false);
@@ -43,17 +44,8 @@ const Product = () => {
     return (
         notFound ? "Produto não encontrado :(" :
             <Container>
-                <Produto key={product.id}>
-                    <img src={product.fotoLink}
-                        alt={product.nome}
-                        onError={(e) => { e.target.onerror = null; e.target.src = "https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png" }}>
-                    </img>
-                    <Info>
-                        <p className="nome">{product.nome} - {product.descricao}</p>
-                        <p className="categoria">{product.nomeCategoria}</p>
-                        <h3>R${product.valor}</h3>
-                    </Info>
-                </Produto>
+                <Product product={product}/>
+                
                 <Compra>
                     <p id='parcela'>
                         12x sem juros de <strong>R${(product.valor / 12).toFixed(2)}</strong>
@@ -81,4 +73,4 @@ const Product = () => {
 
 }
 
-export default Product;
+export default ProductPage;

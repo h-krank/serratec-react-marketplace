@@ -5,6 +5,7 @@ export const Container = styled.div`
     width: 70%;
     margin-left:auto;
     margin-right:auto;
+    
 
     background-color:#eee;
 
@@ -18,6 +19,7 @@ export const Container = styled.div`
 export const Produto = styled.div `
     display: flex;
     padding: 10px;
+
 
     img{
         width: 300px;
@@ -56,6 +58,8 @@ export const Compra = styled.div`
     margin: 10px;
     margin-left: auto;
     min-width:30%;
+
+
     
     button{
         margin: 5px;
@@ -64,8 +68,9 @@ export const Compra = styled.div`
     #parcela{
         margin-top: 5px;
         margin-bottom: auto;
+        border: 0;
     }
-
+    
     #qtdProduto{
         width: 60px;
         margin-left: 5px;

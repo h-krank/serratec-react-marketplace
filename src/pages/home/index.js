@@ -1,14 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom'
-import { Container, Product, ProductSection, Info } from './style';
-
+import { Container, Produto, ProductSection, Info } from './style';
 
 import api from '../../services/api'
-/*
-TODO: -Improve price filter
-        -Deve voltar ao padrão quando vazio
-        -Adicionar forma mais simples de limpar o filtro
-*/
 
 const Home = () => {
     const [products, setProducts] = useState(['']);
@@ -35,8 +29,8 @@ const Home = () => {
             <ProductSection>
                 {!products.length ? "Nenhum produto encontrado :(" :
                     products.map(product => (
-
-                        <Product key={product.id + product.nome}>
+                        
+                        <Produto key={product.id + product.nome}>
                             <Link to={`/product/${product.id}`}>
                                 <img src={product.fotoLink}
                                     alt={product.nome}
@@ -51,7 +45,7 @@ const Home = () => {
                                 <h3>{convertPrice(product.valor)}</h3>
                             </Info>
 
-                        </Product>
+                        </Produto>
                     )
                     )
                 }

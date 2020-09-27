@@ -11,11 +11,12 @@ export const Form = styled.div`
         width: 100%;
         height: 50px;
         border: 0;
-        background-color: green;
-        color:white;
+        background-color: #fff;
+        color:#fd9304;
+        border: 1px solid #fd9304;
 
-        &:hover{
-            background-color: darkgreen;
+        &:hover {
+            opacity: 75%;
         }
     }
     margin-left: auto;
@@ -41,11 +42,11 @@ export const CriarFuncionario = styled.div `
         margin-left: auto;
         margin-right: auto;
         background-color: #fff;
-        color: black;
-        border: 1px solid #ccc;
+        color:#fd9304;
+        border: 1px solid #fd9304;
 
         &:hover {
-            background-color: #fffeee;
+            opacity: 75%;
         }
     }
 `

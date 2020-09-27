@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiX } from 'react-icons/fi'
 
-import { Container, Product, Info, CartInfo } from './style'
+import { Container, Info, CartInfo, Item } from './style'
+
+import Product from '../../components/product'
 
 const Cart = () => {
     const [carrinho, setCarrinho] = useState([]);
@@ -43,23 +45,14 @@ const Cart = () => {
         carrinho.length > 0 ?
             <Container>
                 {carrinho.map(product => (
-                    <Product key={product.id}>
-                        <Link to={`/product/${product.id}`}>
-                            <img src={product.fotoLink}
-                                alt={product.nome}
-                                onError={(e) => { e.target.onerror = null; e.target.src = "https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png" }}>
-                            </img>
-                        </Link>
+                    <>
+                        <Item>
+                            <Product key={product.id} product={product} />
+                            <FiX onClick={e => removeItem(product.id)} />
+                        </Item>
+                        <hr style={{ color: '#eee' }} />
+                    </>
 
-                        <Info>
-                            <Link to={`/product/${product.id}`}><p className="nome">{product.nome} - {product.descricao}</p></Link>
-                            <p className="categoria">{product.nomeCategoria}</p>
-                            <h5>x{product.qtd}</h5>
-                            <h3>{convertPrice(product.valor)}</h3>
-                        </Info>
-                        <FiX onClick={e => removeItem(product.id)} />
-
-                    </Product>
                 ))}
                 <CartInfo>
                     <h4>Total:{loadCartInfo()}</h4>

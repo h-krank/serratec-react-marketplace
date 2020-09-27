@@ -4,7 +4,7 @@ import {Switch, Route} from 'react-router-dom'
 import Search from "../pages/search"
 import Home from "../pages/home"
 import Login from "../pages/login"
-import Product from "../pages/product"
+import ProductPage from "../pages/product"
 import Dashboard from '../pages/dashboard'
 import Categoria from "../pages/dashboard/categoria"
 import Funcionario from "../pages/dashboard/funcionario"
@@ -18,7 +18,7 @@ const Routes = () => (
         <Route path="/" component={Login} exact/>
         <Route path="/home" component={Home}/>
         <Route path="/search" component={Search}/>
-        <Route path="/product" component={Product}/>
+        <Route path="/product" component={ProductPage}/>
         <Route path="/dashboard/" component={Dashboard} exact/>
         <Route path="/dashboard/categoria" component={Categoria}/>
         <Route path="/dashboard/funcionario" component={Funcionario}/>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom'
-import { Container, Filter, Price, Product, ProductSection, Info } from './style';
+import { Container, Filter, Price, ProductSection, Info } from './style';
+
+import Product from '../../components/product'
 
 import api from '../../services/api'
 
@@ -14,13 +16,13 @@ const Search = () => {
   const [maxValue, setMaxValue] = useState(Infinity);
 
   const [query, setQuery] = useState([]);
- 
+
   const loadProducts = useCallback(
     async () => {
       const response = await api.get("produto")
       const query = history.location.search.replace('?', '').split('&')
       setQuery(query)
-      
+
       if (query.length > 0) {
         response.data = response.data.filter(product => (
           query.some(q => product.nome.toLowerCase().includes(q))
@@ -38,7 +40,7 @@ const Search = () => {
       ))
 
       setProducts(response.data)
-    }, [filters, maxValue, minValue])
+    }, [filters, maxValue, minValue, history.location.search])
 
 
   const loadCategories = async () => {
@@ -47,7 +49,7 @@ const Search = () => {
     setCategories(response.data);
 
   }
-  
+
 
   useEffect(() => {
     loadProducts();
@@ -109,36 +111,16 @@ const Search = () => {
             onClick={() => loadProducts()}
           />
         </Price>
-
-
       </Filter>
 
       <ProductSection>
         <p><strong>Busca: </strong>{query.join(' ')}</p>
         {!products.length ? "Nenhum produto encontrado :(" :
           products.map(product => (
-
-            <Product key={product.id}>
-              <Link to={`/product/${product.id}`}>
-                <img
-                  src={product.fotoLink}
-                  alt={product.nome}
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = "https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png"
-                  }}>
-                </img>
-              </Link>
-
-              <Info>
-                <Link to={`/product/${product.id}`}>
-                  <p className="nome">{product.nome} - {product.descricao}</p>
-                </Link>
-                <p className="categoria">{product.nomeCategoria}</p>
-                <h3>{convertPrice(product.valor)}</h3>
-              </Info>
-
-            </Product>
+            <>
+              <Product key={product.id} product={product} />
+              <hr style={{color:'#eee'}}/>
+            </>
           )
           )
         }

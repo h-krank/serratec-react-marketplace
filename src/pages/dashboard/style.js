@@ -12,12 +12,13 @@ export const Container = styled.div`
         width: 100%;
         height: 50px;
         border: 0;
-        background-color: green;
-        color:white;
         margin-bottom: 20px;
+        background-color: #fff;
+        color:#fd9304;
+        border: 1px solid #fd9304;
 
         &:hover{
-            background-color: darkgreen;
+            opacity: 70%;
         }
     }
 

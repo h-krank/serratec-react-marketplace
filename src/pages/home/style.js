@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     display: grid;
-
 `
 
 export const Info = styled.div`
@@ -25,7 +24,7 @@ export const ProductSection = styled.div`
     justify-content: center;
 `
 
-export const Product = styled.div`
+export const Produto = styled.div`
     display: flex;
     flex-direction: column;
     border: 1px solid #ccc;
@@ -45,6 +44,7 @@ export const Product = styled.div`
         padding-top: 10px;
         padding-bottom: 5px;
         border-bottom: 1px solid #ccc;
+        color: black;
 
     }
     
