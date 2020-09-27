@@ -28,25 +28,28 @@ const Home = () => {
 
             <ProductSection>
                 {!products.length ? "Nenhum produto encontrado :(" :
-                    products.map(product => (
+                    products.map(product => {
+                        if (product.qtdEstoque)
+                            return (
 
-                        <Produto key={product.id + product.nome}>
-                            <Link to={`/product/${product.id}`}>
-                                <img src={product.fotoLink}
-                                    alt={product.nome}
-                                    onError={(e) => { e.target.onerror = null; e.target.src = "https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png" }}>
-                                </img>
-                            </Link>
+                                <Produto key={product.id + product.nome}>
+                                    <Link to={`/product/${product.id}`}>
+                                        <img src={product.fotoLink}
+                                            alt={product.nome}
+                                            onError={(e) => { e.target.onerror = null; e.target.src = "https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png" }}>
+                                        </img>
+                                    </Link>
 
-                            <Info>
-                                <Link to={`/product/${product.id}`}>
-                                    <p className="nome">{product.nome} - {product.descricao}</p>
-                                </Link>
+                                    <Info>
+                                        <Link to={`/product/${product.id}`}>
+                                            <p className="nome">{product.nome} - {product.descricao}</p>
+                                        </Link>
 
-                            </Info>
-                                <h3>{convertPrice(product.valor)}</h3>
-                        </Produto>
-                    )
+                                    </Info>
+                                    <h3>{convertPrice(product.valor)}</h3>
+                                </Produto>
+                            )
+                    }
                     )
                 }
 

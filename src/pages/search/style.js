@@ -27,6 +27,28 @@ export const Price = styled.div`
         
     }
 `
+export const PriceActive = styled.div`
+    display: flex;
+
+    div {
+        margin-left: auto;
+        margin-right: 5px;
+        display: flex;
+        :hover{
+            cursor: pointer;
+        }
+        
+    
+        span{
+            margin-top: 2px;
+            font-size: 12px;
+    
+        }
+
+    }
+
+`
+
 export const ProductSection = styled.div`
     display:flex;
     flex-direction: column;
@@ -41,24 +63,15 @@ export const ProductSection = styled.div`
     }
 `
 
-export const Product = styled.div `
+export const Blur = styled.div`
     display: flex;
-    padding: 10px;
-
-    img{
-        width: 150px;
-        height: 150px;
-        
-        &:hover{
-            cursor: pointer;
-            opacity: .8;
-        }
-            
+    flex-direction: column;
+    
+    #unavailable{
+        margin-left: auto;
+        font-size: 10px;
     }
 
-    & + div {
-        border-top: 1px solid #ccc;
-    }
 `
 
 export const Info = styled.div`

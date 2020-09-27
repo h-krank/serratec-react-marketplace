@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom'
-import { Container, Filter, Price, ProductSection } from './style';
-
 import Product from '../../components/product'
-
+import {FiX} from 'react-icons/fi'
 import api from '../../services/api'
+
+import { Container, Filter, Blur, Price, PriceActive, ProductSection } from './style';
+
 
 
 const Search = () => {
@@ -12,8 +13,10 @@ const Search = () => {
   const [products, setProducts] = useState(['']);
   const [categories, setCategories] = useState([]);
   const [filters, setFilters] = useState([]);
-  const [minValue, setMinValue] = useState(-Infinity);
-  const [maxValue, setMaxValue] = useState(Infinity);
+
+  const [activePriceFilter, setActivePriceFilter] = useState(false);
+  const [minValue, setMinValue] = useState();
+  const [maxValue, setMaxValue] = useState();
 
   const [query, setQuery] = useState([]);
 
@@ -34,13 +37,14 @@ const Search = () => {
           filters.includes(product.nomeCategoria)
         ))
       }
-
-      response.data = response.data.filter(product => (
-        product.valor <= maxValue && product.valor >= minValue
-      ))
+      if (activePriceFilter) {
+        response.data = response.data.filter(product => (
+          product.valor <= maxValue && product.valor >= minValue
+        ))
+      }
 
       setProducts(response.data)
-    }, [filters, maxValue, minValue, history.location.search])
+    }, [filters, maxValue, minValue, activePriceFilter, history.location.search])
 
 
   const loadCategories = async () => {
@@ -61,7 +65,10 @@ const Search = () => {
     } else {
       setFilters(filters.filter(f => f !== e.value))
     }
+  }
 
+  function convertPrice(value) {
+    return Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
   }
 
   return (
@@ -82,38 +89,52 @@ const Search = () => {
         ))}
 
         <h4>Preço</h4>
-        <Price>
-          <input
-            type="number"
-            value={minValue}
-            min='0'
-            max={maxValue}
-            onChange={e => setMinValue(e.target.value)}
-            placeholder="min"
-          />
-          <input
-            type="number"
-            value={maxValue}
-            min={minValue}
-            onChange={e => setMaxValue(e.target.value)}
-            placeholder="max"
-          />
-          <input
-            type="button"
-            value="Aplicar"
-            onClick={() => loadProducts()}
-          />
-        </Price>
+        {!activePriceFilter ?
+          <Price>
+            <input
+              type="number"
+              value={minValue}
+              min='0'
+              max={maxValue}
+              onChange={e => setMinValue(e.target.value)}
+              placeholder="min"
+            />
+            <input
+              type="number"
+              value={maxValue}
+              min={minValue}
+              onChange={e => setMaxValue(e.target.value)}
+              placeholder="max"
+            />
+            <input
+              type="button"
+              value="Aplicar"
+              onClick={() => minValue && maxValue && setActivePriceFilter(true)}
+            />
+          </Price> :
+          <PriceActive>
+            de {convertPrice(minValue)} até {convertPrice(maxValue)}
+            <div onClick={() => 
+              {setMinValue(); 
+              setMaxValue(); 
+              setActivePriceFilter(false)}} >
+              <FiX /><span>remover</span>
+            </div>
+            
+            
+          </PriceActive>
+        }
       </Filter>
 
       <ProductSection>
         <p><strong>Busca: </strong>{query.join(' ')}</p>
         {!products.length ? "Nenhum produto encontrado :(" :
           products.map(product => (
-            <>
+            <Blur >
               <Product key={product.id} product={product} />
-              <hr style={{color:'#eee'}}/>
-            </>
+              {product.qtdEstoque < 1 && <p id='unavailable'>Produto indisponivel</p>}
+              <hr style={{ color: '#eee' }} />
+            </Blur>
           )
           )
         }

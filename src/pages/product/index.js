@@ -40,6 +40,14 @@ const ProductPage = () => {
         localStorage.setItem('@AMAZONIA:cart', JSON.stringify(cart))
     }
 
+    const inCart = (id) => {
+        let cart = JSON.parse(localStorage.getItem('@AMAZONIA:cart'));
+        
+        if (!cart)
+            cart = []
+
+        return (cart.some(product => product.id === id))
+    }
 
     return (
         notFound ? "Produto não encontrado :(" :
@@ -50,11 +58,12 @@ const ProductPage = () => {
                     <p id='parcela'>
                         12x sem juros de <strong>R${(product.valor / 12).toFixed(2)}</strong>
                     </p>
-                    <p>Quantidade em estoque: {product.qtdEstoque ? product.qtdEstoque : 'Indisponivel'}</p>
+                    
+                    <p style={{fontSize: '10px'}}>{inCart(product.id) ? 'Produto já adicionado' : ''}</p>
                     <div>
                         <Link to='/cart'>
-                            <button onClick={addToCart}>
-                                Adicionar ao carrinho
+                            <button disabled={product.qtdEstoque === 0} onClick={addToCart}>
+                                {inCart(product.id) ? 'Atualizar Carrinho' : 'Adicionar ao carrinho'}
                         </button>
                         </Link>
                         <input
@@ -63,8 +72,10 @@ const ProductPage = () => {
                             value={qtdProduto}
                             min='1'
                             max={product.qtdEstoque}
+                            disabled={product.qtdEstoque === 0}
                             onChange={e => setQtdProduto(e.target.value)}
                             placeholder='qtd' />
+                            <p>Quantidade em estoque: {product.qtdEstoque ? product.qtdEstoque : 'Indisponivel'}</p>
                     </div>
                 </Compra>
             </Container>

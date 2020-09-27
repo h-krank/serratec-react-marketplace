@@ -57,9 +57,7 @@ export const Compra = styled.div`
     flex-direction:column;
     margin: 10px;
     margin-left: auto;
-    min-width:30%;
-
-
+    min-width:25%;
     
     button{
         margin: 5px;

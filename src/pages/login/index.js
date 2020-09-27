@@ -22,8 +22,6 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        //Give user feedback about wrong fields
-        //Save to localStorage
         const cliente = {
             "nome": name,
             "usuario": user,

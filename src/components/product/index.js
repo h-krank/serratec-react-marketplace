@@ -10,7 +10,7 @@ const Product = ({product}) => {
       }
 
     return (
-        <Produto>
+        <Produto onLoad={(e) => !product.qtdEstoque ? e.target.style.opacity = .2 : ''}>
             <Link to={`/product/${product.id}`}>
                 <img
                     src={product.fotoLink}
