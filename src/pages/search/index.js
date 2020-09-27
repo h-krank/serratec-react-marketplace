@@ -28,7 +28,9 @@ const Search = () => {
 
       if (query.length > 0) {
         response.data = response.data.filter(product => (
-          query.some(q => product.nome.toLowerCase().includes(q))
+          query.some(q => product.nome.toLowerCase().includes(q) 
+                        || product.nomeCategoria.toLowerCase().includes(q)
+                        || product.descricao.toLowerCase().includes(q))
         ))
       }
 
