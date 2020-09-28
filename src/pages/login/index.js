@@ -42,10 +42,13 @@ const Login = () => {
 
         try {
             await api.post('cliente', cliente);
+            localStorage.setItem('@AMAZONIA:user', JSON.stringify(user))
         } catch (error) {
             console.log('handleSubmitError', error)
         }
     }
+
+
 
 
     return (
