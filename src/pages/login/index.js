@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
+import {useHistory} from 'react-router-dom'
 import api from '../../services/api'
 
 import { Form, Address } from './style'
 
 
 const Login = () => {
+    const history = useHistory();
     const [name, setName] = useState('');
     const [user, setUser] = useState('');
     const [cpf, setCpf] = useState('');
     const [email, setEmail] = useState('');
-    
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,13 +21,24 @@ const Login = () => {
             "usuario": user,
             "cpf": cpf,
             "email": email,
-            
+            "dataNascimento": "1992-02-01T00:00:00Z",
+            "endereco": {
+                "rua": "Rua dos Bobos",
+                "numero": "0",
+                "complemento": "",
+                "bairro": "Castanheira",
+                "cidade": "Metropolis",
+                "estado": "SP",
+                "cep": "23451234"
+            }
         }
-        console.log(cliente)
+
+        console.log(JSON.stringify(cliente))
 
         try {
             await api.post('cliente', cliente);
-            //Salvar cliente no localstorage
+            localStorage.setItem('@AMAZONIA:user', JSON.stringify(cliente));
+            history.push('/home');
         } catch (error) {
             console.log('handleSubmitError', error)
         }
@@ -63,8 +76,8 @@ const Login = () => {
                     value={email}
                     onChange={e => setEmail(e.target.value)} />
 
-               
-                
+
+
 
 
                 <button type="submit">Enviar</button>
