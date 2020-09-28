@@ -99,6 +99,9 @@ const Cart = () => {
                         }
                     }}><button>Finalizar compra</button>
                     </Link>
+                    <CartInfo>
+                    <Link to="/home"><button>Continuar Comprando</button></Link>
+                    </CartInfo> 
                 </CartInfo>
 
             </Container>
