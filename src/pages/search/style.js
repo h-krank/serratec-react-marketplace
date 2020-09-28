@@ -61,12 +61,16 @@ export const ProductSection = styled.div`
         text-decoration: none;
         color: black;
     }
+    
+    span {
+        margin-top: 30px;
+    }
 `
 
 export const Blur = styled.div`
     display: flex;
     flex-direction: column;
-    
+
     #unavailable{
         margin-left: auto;
         font-size: 10px;

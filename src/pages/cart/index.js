@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiX, FiChevronUp, FiChevronDown } from 'react-icons/fi'
+import { FiX, FiChevronUp, FiChevronDown, FiShoppingCart } from 'react-icons/fi'
 
-import { Container, CartInfo, Item } from './style'
+import { Container, CartInfo, Item, Empty } from './style'
 
 import Product from '../../components/product'
 
 const Cart = () => {
-    const [carrinho, setCarrinho] = useState([]);
+    const [carrinho, setCarrinho] = useState(['']);
 
     const handleCarrinho = () => {
         let cart = JSON.parse(localStorage.getItem('@AMAZONIA:cart'));
@@ -102,7 +102,11 @@ const Cart = () => {
                 </CartInfo>
 
             </Container>
-            : <p>Carrinho está vazio</p>
+            : <Empty>
+                <FiShoppingCart size="200"/>
+                <p>Carrinho vazio</p>
+                <Link to='/home'><button>Voltar para loja</button></Link>
+            </Empty>
     )
 }
 

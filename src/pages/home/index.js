@@ -29,7 +29,7 @@ const Home = () => {
             <ProductSection>
                 {!products.length ? "Nenhum produto encontrado :(" :
                     products.map(product => {
-                        if (product.qtdEstoque)
+                        if (product.qtdEstoque > 0)
                             return (
 
                                 <Produto key={product.id + product.nome}>
@@ -49,6 +49,7 @@ const Home = () => {
                                     <h3>{convertPrice(product.valor)}</h3>
                                 </Produto>
                             )
+                            return ''
                     }
                     )
                 }

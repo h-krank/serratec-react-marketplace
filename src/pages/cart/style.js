@@ -117,3 +117,20 @@ export const CartInfo = styled.div`
         margin-left: auto;
     }
 `
+
+export const Empty = styled.div`
+    text-align: center;
+
+    svg {
+        margin-right: 30px;
+        color: #333;
+    }
+
+    p {
+        font-size: 30px;
+    }
+
+    button{
+        margin-top: 50px;
+    }
+`

@@ -16,7 +16,6 @@ const ProductPage = () => {
         async () => {
             try {
                 const response = await api.get(`produto/${id.length ? id : '0'}`)
-
                 setProduct(response.data);
             } catch (error) {
                 console.log(error)
@@ -48,21 +47,25 @@ const ProductPage = () => {
 
         return (cart.some(product => product.id === id))
     }
+    
+    function convertPrice(value) {
+        return Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+    }
 
     return (
-        notFound ? "Produto não encontrado :(" :
+        notFound ? <span style={{margin: '20px'}}>Produto não encontrado :(</span> :
             <Container>
                 <Product product={product} />
 
                 <Compra>
                     <p id='parcela'>
-                        12x sem juros de <strong>R${(product.valor / 12).toFixed(2)}</strong>
+                        12x sem juros de <strong>{convertPrice(product.valor / 12)}</strong>
                     </p>
                     
                     <p style={{fontSize: '10px'}}>{inCart(product.id) ? 'Produto já adicionado' : ''}</p>
                     <div>
                         <Link to='/cart'>
-                            <button disabled={product.qtdEstoque === 0} onClick={addToCart}>
+                            <button disabled={product.qtdEstoque < 1} onClick={addToCart}>
                                 {inCart(product.id) ? 'Atualizar Carrinho' : 'Adicionar ao carrinho'}
                         </button>
                         </Link>
@@ -72,10 +75,10 @@ const ProductPage = () => {
                             value={qtdProduto}
                             min='1'
                             max={product.qtdEstoque}
-                            disabled={product.qtdEstoque === 0}
+                            disabled={product.qtdEstoque < 1}
                             onChange={e => setQtdProduto(e.target.value)}
                             placeholder='qtd' />
-                            <p>Quantidade em estoque: {product.qtdEstoque ? product.qtdEstoque : 'Indisponivel'}</p>
+                            <p>Quantidade em estoque: {product.qtdEstoque > 0 ? product.qtdEstoque : 'Indisponivel'}</p>
                     </div>
                 </Compra>
             </Container>

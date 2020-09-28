@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom'
 import Product from '../../components/product'
-import {FiX} from 'react-icons/fi'
+import { FiX } from 'react-icons/fi'
 import api from '../../services/api'
 
 import { Container, Filter, Blur, Price, PriceActive, ProductSection } from './style';
 
-
-
 const Search = () => {
   const history = useHistory();
   const [products, setProducts] = useState(['']);
+  const [filteredProducts, setFilteredProducts] = useState([''])
   const [categories, setCategories] = useState([]);
   const [filters, setFilters] = useState([]);
 
@@ -23,42 +22,56 @@ const Search = () => {
   const loadProducts = useCallback(
     async () => {
       const response = await api.get("produto")
-      const query = history.location.search.replace('?', '').split('&')
-      setQuery(query)
-
-      if (query.length > 0) {
-        response.data = response.data.filter(product => (
-          query.some(q => product.nome.toLowerCase().includes(q) 
-                        || product.nomeCategoria.toLowerCase().includes(q)
-                        || product.descricao.toLowerCase().includes(q))
-        ))
-      }
-
-      if (filters.length > 0) {
-        response.data = response.data.filter(product => (
-          filters.includes(product.nomeCategoria)
-        ))
-      }
-      if (activePriceFilter) {
-        response.data = response.data.filter(product => (
-          product.valor <= maxValue && product.valor >= minValue
-        ))
-      }
 
       setProducts(response.data)
-    }, [filters, maxValue, minValue, activePriceFilter, history.location.search])
+    }, [])
 
+  const loadFiltered = useCallback(
+    () => {
+      const query = history.location.search.replace('?', '').split('&')
+      setQuery(query)
+      let filtered = products;
+
+      try {
+        if (query.length > 0) {
+          filtered = filtered.filter(product => (
+            query.some(q => product.nome.toLowerCase().includes(q)
+              || product.nomeCategoria.toLowerCase().includes(q)
+              || product.descricao.toLowerCase().includes(q))
+          ))
+        }
+
+        if (filters.length > 0) {
+          filtered = filtered.filter(product => (
+            filters.includes(product.nomeCategoria)
+          ))
+        }
+        if (activePriceFilter) {
+          filtered = filtered.filter(product => (
+            product.valor <= maxValue && product.valor >= minValue
+          ))
+        }
+      } catch (error){
+        console.log(error)
+      }
+
+      setFilteredProducts(filtered)
+
+    }, [products, filters, maxValue, minValue, activePriceFilter, history.location.search])
 
   const loadCategories = async () => {
     const response = await api.get("categoria");
     setCategories(response.data);
   }
 
-
   useEffect(() => {
     loadProducts();
     loadCategories();
-  }, [filters, loadProducts, history.location])
+  }, [loadProducts])
+
+  useEffect(() => {
+    loadFiltered();
+  }, [filters, loadFiltered, history.location])
 
 
   const addFilter = (e) => {
@@ -116,22 +129,23 @@ const Search = () => {
           </Price> :
           <PriceActive>
             de {convertPrice(minValue)} até {convertPrice(maxValue)}
-            <div onClick={() => 
-              {setMinValue(); 
-              setMaxValue(); 
-              setActivePriceFilter(false)}} >
+            <div onClick={() => {
+              setMinValue();
+              setMaxValue();
+              setActivePriceFilter(false)
+            }} >
               <FiX /><span>remover</span>
             </div>
-            
-            
+
+
           </PriceActive>
         }
       </Filter>
 
       <ProductSection>
         <p><strong>Busca: </strong>{query.join(' ')}</p>
-        {!products.length ? "Nenhum produto encontrado :(" :
-          products.map(product => (
+        {!filteredProducts.length ? <span>Nenhum produto encontrado :( </span> :
+          filteredProducts.map(product => (
             <Blur >
               <Product key={product.id} product={product} />
               {product.qtdEstoque < 1 && <p id='unavailable'>Produto indisponivel</p>}

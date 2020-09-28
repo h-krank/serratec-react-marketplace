@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import { Link, useHistory } from 'react-router-dom'
 import logoImg from '../../assets/amazonia-white.png'
-import { Container, Title } from './style'
+import { Container} from './style'
 import { FiSearch } from 'react-icons/fi';
 
 
 
-const Header = ({ title }) => {
+const Header = () => {
     const history = useHistory();
     const [query, setQuery] = useState('');
 
@@ -20,6 +20,7 @@ const Header = ({ title }) => {
                         pathname: '/search',
                         search: query.split(' ').join('&')
                     })
+                    setQuery('');
                     }}>
                     <input 
                         type="text" 
@@ -32,14 +33,13 @@ const Header = ({ title }) => {
                     <li>
                         <Link to='/cart'>Carrinho</Link>
                     </li>
-                    <li>
-                        Sair
+                    <li onClick={() => localStorage.removeItem("@AMAZONIA:user")}>
+                        <Link to='/'>Sair</Link>
                     </li>
 
                 </ul>
 
             </Container>
-            <Title>{title}</Title>
         </>
     )
 

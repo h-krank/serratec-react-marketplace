@@ -22,9 +22,9 @@ const Routes = () => (
         <Route path="/dashboard/" component={Dashboard} exact/>
         <Route path="/dashboard/categoria" component={Categoria}/>
         <Route path="/dashboard/funcionario" component={Funcionario}/>
-        <Route path="/dashboard/produto" component={Produto}/>
+        <Route path="/dashboard/produto" component={Produto} />
         <Route path="/cart" component={Cart}/>
-        <Route path="/checkout" component={Checkout}/>
+        <Route path="/checkout" component={Checkout} />
     </Switch>
 )
 

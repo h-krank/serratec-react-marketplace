@@ -1,13 +1,13 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import {Produto, Info} from './style'
+import { Produto, Info } from './style'
 
-const Product = ({product}) => {
-    
+const Product = ({ product }) => {
+
     function convertPrice(value) {
         return Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-      }
+    }
 
     return (
         <Produto onLoad={(e) => product.qtdEstoque < 1 ? e.target.style.opacity = .2 : ''}>
