@@ -9,8 +9,8 @@ import Product from '../../components/product'
 const Cart = () => {
     const [carrinho, setCarrinho] = useState(['']);
 
-    const handleCarrinho = () => {
-        let cart = JSON.parse(localStorage.getItem('@AMAZONIA:cart'));
+    const loadCarrinho = () => {
+        const cart = JSON.parse(localStorage.getItem('@AMAZONIA:cart'));
 
         //Sets cart to localStorage data if available or to an empty list if empty
         setCarrinho(cart ? cart : [])
@@ -26,43 +26,40 @@ const Cart = () => {
         return convertPrice(total)
     }
 
+    const removeItem = (id) => {
+        const newCart = carrinho.filter(product => product.id !== id);
+        localStorage.setItem('@AMAZONIA:cart', JSON.stringify(newCart))
+        loadCarrinho();
+    }
+
+    const changeQtd = (id, add) => {
+        const newCart = carrinho.map(product => {
+
+            if (add) {
+                if (product.id === id && product.qtd < product.qtdEstoque) {
+                    product.qtd++
+                }
+                return product
+            } else {
+                if (product.id === id && product.qtd > 1) {
+                    product.qtd--
+                }
+                return product
+
+            }
+        })
+
+        setCarrinho(newCart)
+        localStorage.setItem('@AMAZONIA:cart', JSON.stringify(newCart))
+    }
+
     function convertPrice(value) {
         return Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
     }
 
-    const removeItem = (id) => {
-        const newCart = carrinho.filter(product => product.id !== id);
-        localStorage.setItem('@AMAZONIA:cart', JSON.stringify(newCart))
-        handleCarrinho();
-    }
-
-    const addQtd = (id) => {
-        const newCart = carrinho.map(product => {
-
-            if (product.id === id && product.qtd < product.qtdEstoque) {
-                product.qtd++
-            }
-            return product
-        })
-        setCarrinho(newCart)
-        localStorage.setItem('@AMAZONIA:cart', JSON.stringify(newCart))
-    }
-
-    const removeQtd = (id) => {
-        const newCart = carrinho.map(product => {
-
-            if (product.id === id && product.qtd > 1) {
-                product.qtd--
-            }
-            return product
-        })
-        setCarrinho(newCart)
-        localStorage.setItem('@AMAZONIA:cart', JSON.stringify(newCart))
-    }
-
 
     useEffect(() => {
-        handleCarrinho();
+        loadCarrinho();
     }, [])
 
     return (
@@ -76,8 +73,8 @@ const Cart = () => {
                                 <FiX onClick={e => removeItem(product.id)} />
                                 <div className="product-qtd">
                                     <div>
-                                        <FiChevronUp size='12px' onClick={() => addQtd(product.id)} />
-                                        <FiChevronDown size='12px' onClick={() => removeQtd(product.id)} />
+                                        <FiChevronUp size='12px' onClick={() => changeQtd(product.id, true)} />
+                                        <FiChevronDown size='12px' onClick={() => changeQtd(product.id, false)} />
 
                                     </div>
 
@@ -99,11 +96,14 @@ const Cart = () => {
                         }
                     }}><button>Finalizar compra</button>
                     </Link>
+                    <CartInfo>
+                    <Link to="/home"><button>Continuar Comprando</button></Link>
+                    </CartInfo> 
                 </CartInfo>
 
             </Container>
             : <Empty>
-                <FiShoppingCart size="200"/>
+                <FiShoppingCart size="200" />
                 <p>Carrinho vazio</p>
                 <Link to='/home'><button>Voltar para loja</button></Link>
             </Empty>

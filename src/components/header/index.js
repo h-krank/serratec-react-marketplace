@@ -3,6 +3,8 @@ import { Link, useHistory } from 'react-router-dom'
 import logoImg from '../../assets/amazonia-white.png'
 import { Container} from './style'
 import { FiSearch } from 'react-icons/fi';
+import { MdShoppingCart } from 'react-icons/md'
+import { ImExit } from 'react-icons/im'
 
 
 
@@ -31,10 +33,10 @@ const Header = () => {
 
                 <ul>
                     <li>
-                        <Link to='/cart'>Carrinho</Link>
+                    <Link to='/cart'> <MdShoppingCart /></Link>
                     </li>
                     <li onClick={() => localStorage.removeItem("@AMAZONIA:user")}>
-                        <Link to='/'>Sair</Link>
+                    <Link to='/'><ImExit /></Link>
                     </li>
 
                 </ul>

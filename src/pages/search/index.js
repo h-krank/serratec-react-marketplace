@@ -11,13 +11,13 @@ const Search = () => {
   const [products, setProducts] = useState(['']);
   const [filteredProducts, setFilteredProducts] = useState([''])
   const [categories, setCategories] = useState([]);
+  
   const [filters, setFilters] = useState([]);
-
   const [activePriceFilter, setActivePriceFilter] = useState(false);
   const [minValue, setMinValue] = useState();
   const [maxValue, setMaxValue] = useState();
 
-  const [query, setQuery] = useState([]);
+  const [searchQuery, setSearchQuery] = useState([]);
 
   const loadProducts = useCallback(
     async () => {
@@ -29,7 +29,7 @@ const Search = () => {
   const loadFiltered = useCallback(
     () => {
       const query = history.location.search.replace('?', '').split('&')
-      setQuery(query)
+      setSearchQuery(query)
       let filtered = products;
 
       try {
@@ -143,7 +143,7 @@ const Search = () => {
       </Filter>
 
       <ProductSection>
-        <p><strong>Busca: </strong>{query.join(' ')}</p>
+        <p><strong>Busca: </strong>{searchQuery.join(' ')}</p>
         {!filteredProducts.length ? <span>Nenhum produto encontrado :( </span> :
           filteredProducts.map(product => (
             <Blur >
