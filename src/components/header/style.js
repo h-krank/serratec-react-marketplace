@@ -48,21 +48,28 @@ export const Container = styled.div`
         margin: 10px;
         margin-left: auto;
         margin-top: auto;
+        &:hover{
+            color: #ffb540;
     }
     li {
-        font-size: 14px;
+        font-size: 30px;
+        margin-right: 20px;
+        transition:0.2s;
 
         & + li {
             margin-left: 15px;
+            &:hover{
+                color: #ffb540;
         }
     }
 
     a{
-        color: #333;
+        color: #fff;
         text-decoration: none;
+        transition:0.2s;
 
         &:hover{
-            color: #04d361;
+            color: #FB9A01;
         }
     }
-`
+` 

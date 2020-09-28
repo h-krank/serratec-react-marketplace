@@ -65,7 +65,9 @@ const Checkout = (props) => {
                 <FiCheckCircle size='200px' />
                 <h1>Compra finalizada com sucesso!</h1>
             </Container>
-            : <> </>
+            : <>
+            
+             </>
     )
 }
 
