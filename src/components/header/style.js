@@ -2,10 +2,9 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
     display: flex;
-
-
     margin-bottom: 40px;
     border-bottom: 1px solid #ccc;
+    background-color: #131921;
 
     img{
         width: 150px;
@@ -15,7 +14,7 @@ export const Container = styled.div`
 
     form {
         display: flex;
-        margin-top: 20px;
+        margin-top: 10px;
         
         input {
             padding: 10px;
@@ -32,12 +31,13 @@ export const Container = styled.div`
             height: 40px;
             background-color: #fff;
             color: black;
-            border: 1px solid #ccc;
+            border: 1px solid #febd69;
             border-left: none;
             border-radius: 0px 5px 5px 0px;
+            background-color: #febd69;
 
             &:hover {
-                background-color: #fffeee;
+                opacity: .75;
             }
         }
     }

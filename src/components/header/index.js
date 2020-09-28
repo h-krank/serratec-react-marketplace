@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Link, useHistory } from 'react-router-dom'
-import logoImg from '../../assets/amazonia.jpg'
+import logoImg from '../../assets/amazonia-white.png'
 import { Container, Title } from './style'
 import { FiSearch } from 'react-icons/fi';
 
