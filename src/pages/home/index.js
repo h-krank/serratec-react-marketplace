@@ -29,9 +29,9 @@ const Home = () => {
             <ProductSection>
                 {!products.length ? "Nenhum produto encontrado :(" :
                     products.map(product => {
+                        
                         if (product.qtdEstoque > 0)
                             return (
-
                                 <Produto key={product.id + product.nome}>
                                     <Link to={`/product/${product.id}`}>
                                         <img src={product.fotoLink}

@@ -15,9 +15,14 @@ const Checkout = (props) => {
         props.location.state.finished = true;
         checkout = true;
     } catch (error) {
-
         history.push('/home')
     }
+
+    const getCart = useCallback(
+        () => {
+            setCart(JSON.parse(localStorage.getItem("@AMAZONIA:cart")));
+
+        }, [])
 
     const updateProducts = useCallback(
         () => {
@@ -37,15 +42,12 @@ const Checkout = (props) => {
                     })
                 })
                 localStorage.removeItem("@AMAZONIA:cart")
+                //Post do pedido com cliente do localstorage
                 setCompraFinalizada(true);
             }
         }, [cart, checkout])
 
-    const getCart = useCallback(
-        () => {
-            setCart(JSON.parse(localStorage.getItem("@AMAZONIA:cart")));
 
-        }, [])
 
 
     useEffect(() => {

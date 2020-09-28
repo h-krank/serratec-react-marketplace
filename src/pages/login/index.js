@@ -42,6 +42,7 @@ const Login = () => {
 
         try {
             await api.post('cliente', cliente);
+            //Salvar cliente no localstorage
         } catch (error) {
             console.log('handleSubmitError', error)
         }
