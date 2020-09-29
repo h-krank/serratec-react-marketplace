@@ -1,71 +1,115 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// import { FiX, FiChevronUp, FiChevronDown, FiShoppingCart } from 'react-icons/fi'
-
-// import { Container, CartInfo, Item, Empty } from './style'
-
+import api from '../../services/api';
+import {Container} from './style'
 
 
 const Cliente = () => {
-    const[idCliente, setIdCliente] = useState();
+    const [idCliente, setIdCliente] = useState();
     const [cliente, setCliente] = useState([]);
-    const [newNome, setNewNome] = useState();
+    const [nome, setNome] = useState();
     const [usuario, setUsuario] = useState();
     const [cpf, setCpf] = useState();
     const [email, setEmail] = useState();
-    const [dataNascimento, setDataNascimento] = useState();
-    const [rua, setRua] = useState();
-    const [numero, setNumero] = useState();
-    const [complemento, setComplemento] = useState();
-    const [bairro, setBairro] = useState();
-    const [cidade, setCidade] = useState();
-    const [estado, setEstado] = useState();
-    const [cep, setCep] = useState();
+    const [alterCliente, setAlterarCliente] = useState(false);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('@AMAZONIA:user')))
     
 
-    const handleCliente = () => {
-        let cliente = JSON.parse(localStorage.getItem('@AMAZONIA:cliente'));
-        setCliente(cliente);
+useEffect(() => {
+ definirEstados();
+}, []);
+
+const definirEstados = () => {
+
+    setNome(user.nome);
+    setUsuario(user.usuario);
+    setCpf(user.cpf);
+    setEmail(user.email);
+
+}
+
+function alterarCliente (e) {
+    e.preventDefault();
+    
+    try {
+        const params = {
+            nome: nome,
+            usuario: usuario,
+            cpf: cpf, 
+            email: email,
+            dataNascimento: "1992-02-01T00:00:00Z",
+                endereco: {
+                rua: "Rua dos Bobos",
+                numero: "0",
+                complemento: "",
+                bairro: "Castanheira",
+                cidade: "Metropolis",
+                estado: "SP",
+                cep: "23451234"
+            }
 
     }
 
-
-//    -Adicionar página do cliente exibindo suas informações e possibilitando alterá-las
-
-
-
-// async function alterarCliente (e) {
-//     e.preventDefault();
+        console.log(params)
+        localStorage.setItem('@AMAZONIA:user',JSON.stringify(params)); 
     
-//     try {
-//         const params = {
-//             nome: cliente.nome,
-//             usuario: cliente.usuario,
-//             cpf: cliente.cpf, 
-//             email: cliente.email,
-//             dataNascimento: cliente.dataNascimento,
-//             endereco: cliente.endereco
-
-//     }
-
-//         // console.log(params)
-//         await api.put(`cliente/${idCliente}`, params)
-        
-//     } catch (error) {
-//         console.log("Erro ao alterar o cliente", error)
-//     }
-// }
-
-
-useEffect(() => {
-//    buscarCliente();
-}, []);
+    } catch (error) {
+        console.log("Erro ao alterar o cliente", error)
+    }
+}
 
 
 return(
-    <h1>Ola Mundo!</h1>
-)
 
+    <Container>
+
+
+    {!alterCliente &&
+        <div>
+            
+            <p>Nome: {nome}</p>
+            <p>Usuário: {usuario}</p>
+            <p>Cpf: {cpf}</p>
+            <p>Email: {email}</p>
+                        
+            <button type="submit" onClick={e => setAlterarCliente(!alterCliente)}> Alterar</button>
+        
+        </div>
+    }
+
+    {alterCliente && 
+
+        <form onSubmit={(e) => {
+            setAlterarCliente(!alterCliente);
+            alterarCliente(e); 
+
+        } 
+        }>
+
+
+            <label>Nome </label>
+            <input type="text" value={nome} onChange={e => setNome(e.target.value)} />
+            
+            <label> Usuario </label>
+            <input type="text" value={usuario} onChange={e => setUsuario(e.target.value)} />
+            
+            <label> Cpf </label>
+            <input type="text" value={cpf} onChange={e => setCpf(e.target.value)} />
+            
+            <label> Email </label>
+            <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
+            
+            <button type="submit"> Alterar </button>
+            
+            
+        </form>
+        
+    }
+        
+    </Container>
+    
+    )
+    
 }
 
 export default Cliente;
