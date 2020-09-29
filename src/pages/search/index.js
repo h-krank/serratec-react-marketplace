@@ -117,7 +117,7 @@ const Search = () => {
             <input
               type="number"
               value={maxValue}
-              min={minValue}
+              min={minValue ? minValue : 0}
               onChange={e => setMaxValue(e.target.value)}
               placeholder="max"
             />

@@ -10,9 +10,9 @@ export default createGlobalStyle`
     }
     
     html, body, #root{
-        height: 100%; 
+        height: 100%;  
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
     }
 
     body, input, button{
@@ -24,4 +24,4 @@ export default createGlobalStyle`
     #root{
         /* max-width: 700px; */
     }
-`;
+`

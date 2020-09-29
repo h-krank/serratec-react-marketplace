@@ -6,6 +6,7 @@ import api from '../../services/api'
 
 const Home = () => {
     const [products, setProducts] = useState(['']);
+    
 
     const loadProducts = useCallback(
         async () => {
@@ -25,8 +26,8 @@ const Home = () => {
 
     return (
         <Container>
-
             <ProductSection>
+                
                 {!products.length ? "Nenhum produto encontrado :(" :
                     products.map(product => {
                         

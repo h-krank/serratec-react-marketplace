@@ -9,6 +9,7 @@ const Checkout = (props) => {
     const history = useHistory();
     const [cart, setCart] = useState([]);
     const [compraFinalizada, setCompraFinalizada] = useState(false);
+
     let checkout = false;
 
     try {
@@ -25,10 +26,8 @@ const Checkout = (props) => {
         }, [])
 
     const updateProducts = useCallback(
-        () => {
+        async () => {
             if (checkout) {
-
-
                 cart.map(async (product) => {
                     await api.put(`produto/${product.id}`, {
                         "nome": product.nome,
@@ -41,15 +40,32 @@ const Checkout = (props) => {
                         "nomeFuncionario": product.nomeFuncionario,
                     })
                 })
+
                 localStorage.removeItem("@AMAZONIA:cart")
-                //Post do pedido com cliente do localstorage
                 setCompraFinalizada(true);
             }
         }, [cart, checkout])
 
 
+    const getData = useCallback(
+        async () => {
+            const user = JSON.parse(localStorage.getItem('@AMAZONIA:user'));
 
+            if (compraFinalizada) {
 
+                await api.post('/pedido', {
+                    'dataPedido': '2020-08-30T20:10:10Z',
+                    'pedidoStatus': 'AGUARDANDO_PAGAMENTO',
+                    'idCliente': user.id,
+                    'nomeCliente': user.nome
+                })
+            }
+        }, [compraFinalizada])
+
+    useEffect(() => {
+        getData();
+    }, [compraFinalizada, getData])
+    
     useEffect(() => {
         getCart();
     }, [getCart])
@@ -66,8 +82,8 @@ const Checkout = (props) => {
                 <h1>Compra finalizada com sucesso!</h1>
             </Container>
             : <>
-            
-             </>
+
+            </>
     )
 }
 

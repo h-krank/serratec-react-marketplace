@@ -11,6 +11,7 @@ import Funcionario from "../pages/dashboard/funcionario"
 import Produto from "../pages/dashboard/produto"
 import Cart from '../pages/cart'
 import Checkout from '../pages/checkout'
+import Cliente from '../pages/cliente'
 
 
 const Routes = () => (
@@ -26,6 +27,7 @@ const Routes = () => (
         <Route path="/dashboard/produto" component={Produto} />
         <Route path="/cart" component={Cart}/>
         <Route path="/checkout" component={Checkout} />
+        <Route path="/cliente" component={Cliente} />
     </Switch>
 
     </Container>
