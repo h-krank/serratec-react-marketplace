@@ -4,6 +4,7 @@ import { FiDelete, FiEdit } from "react-icons/fi";
 
 
 import { Categorias, Container, Form, CriarCategoria } from './style'
+import Header from '../../../components/header'
 
 const Categoria = () => {
     const [categorias, setCategorias] = useState([]);
@@ -67,42 +68,45 @@ const Categoria = () => {
     }
 
     return (
-        <Container>
-            <Form>
-                <button onClick={() => {
-                    setCriarCategoria(!criarCategoria);
-                    setEditarCategoria(false)
-                }}> Administrar Categoria </button>
+        <>
+        <Header />
+            <Container>
+                <Form>
+                    <button onClick={() => {
+                        setCriarCategoria(!criarCategoria);
+                        setEditarCategoria(false)
+                    }}> Administrar Categoria </button>
 
-                {criarCategoria &&
-                    <CriarCategoria >
-                        <form onSubmit={handleCriarCategoria}>
-                            <input
-                                type="text"
-                                value={categoriaNome}
-                                onChange={e => setCategoriaNome(e.target.value)}
-                                placeholder="Insira o nome da categoria" />
-                            <input
-                                type="text"
-                                value={categoriaDescricao}
-                                onChange={e => setCategoriaDescricao(e.target.value)}
-                                placeholder="Insira a descrição da categoria" />
+                    {criarCategoria &&
+                        <CriarCategoria >
+                            <form onSubmit={handleCriarCategoria}>
+                                <input
+                                    type="text"
+                                    value={categoriaNome}
+                                    onChange={e => setCategoriaNome(e.target.value)}
+                                    placeholder="Insira o nome da categoria" />
+                                <input
+                                    type="text"
+                                    value={categoriaDescricao}
+                                    onChange={e => setCategoriaDescricao(e.target.value)}
+                                    placeholder="Insira a descrição da categoria" />
 
-                            <button type='submit'>Enviar</button>
-                        </form>
-                    </CriarCategoria>}
-            </Form>
+                                <button type='submit'>Enviar</button>
+                            </form>
+                        </CriarCategoria>}
+                </Form>
 
-            {categorias.map(categoria => (
-                <Categorias key={categoria.id}>
-                    {categoria.nome} - {categoria.descricao}
-                    <div>
-                        <FiEdit size='20px' onClick={() => editItem(categoria)} />
-                        <FiDelete size='20px' onClick={() => removeItem(categoria)} />
-                    </div>
-                </Categorias>
-            ))}
-        </Container>
+                {categorias.map(categoria => (
+                    <Categorias key={categoria.id}>
+                        {categoria.nome} - {categoria.descricao}
+                        <div>
+                            <FiEdit size='20px' onClick={() => editItem(categoria)} />
+                            <FiDelete size='20px' onClick={() => removeItem(categoria)} />
+                        </div>
+                    </Categorias>
+                ))}
+            </Container>
+        </>
     )
 
 }

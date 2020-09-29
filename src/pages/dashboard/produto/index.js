@@ -4,6 +4,7 @@ import { FiDelete, FiEdit } from "react-icons/fi";
 
 
 import { Produtos, Container, Form, CriarProduto } from './style'
+import Header from '../../../components/header'
 
 const Produto = () => {
     //Produtos
@@ -125,6 +126,8 @@ const Produto = () => {
     }
 
     return (
+        <>
+        <Header />
         <Container>
             <Form>
                 <button onClick={() => {setCriarProduto(!criarProduto); setEditarProduto(false)}}>Administrar Produto</button>
@@ -208,6 +211,7 @@ const Produto = () => {
                 </Produtos>
             ))}
         </Container>
+        </>
     )
 
 }

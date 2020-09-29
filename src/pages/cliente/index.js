@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../../services/api';
 import { Container } from './style'
+import Header from '../../components/header'
 
 
 const Cliente = () => {
@@ -16,12 +17,12 @@ const Cliente = () => {
     const definirEstados = useCallback(
         () => {
 
-        setNome(user.nome);
-        setUsuario(user.usuario);
-        setCpf(user.cpf);
-        setEmail(user.email);
+            setNome(user.nome);
+            setUsuario(user.usuario);
+            setCpf(user.cpf);
+            setEmail(user.email);
 
-    }, [user.nome, user.usuario, user.cpf, user.email])
+        }, [user.nome, user.usuario, user.cpf, user.email])
     useEffect(() => {
         definirEstados();
     }, [definirEstados]);
@@ -60,54 +61,55 @@ const Cliente = () => {
 
 
     return (
+        <>
+        <Header />
+            <Container>
 
-        <Container>
+
+                {!alterCliente &&
+                    <div>
+
+                        <p>Nome: {nome}</p>
+                        <p>Usuário: {usuario}</p>
+                        <p>Cpf: {cpf}</p>
+                        <p>Email: {email}</p>
+
+                        <button type="submit" onClick={e => setAlterarCliente(!alterCliente)}> Alterar</button>
+
+                    </div>
+                }
+
+                {alterCliente &&
+
+                    <form onSubmit={(e) => {
+                        setAlterarCliente(!alterCliente);
+                        alterarCliente(e);
+
+                    }
+                    }>
 
 
-            {!alterCliente &&
-                <div>
+                        <label>Nome </label>
+                        <input type="text" value={nome} onChange={e => setNome(e.target.value)} />
 
-                    <p>Nome: {nome}</p>
-                    <p>Usuário: {usuario}</p>
-                    <p>Cpf: {cpf}</p>
-                    <p>Email: {email}</p>
+                        <label> Usuario </label>
+                        <input type="text" value={usuario} onChange={e => setUsuario(e.target.value)} />
 
-                    <button type="submit" onClick={e => setAlterarCliente(!alterCliente)}> Alterar</button>
+                        <label> Cpf </label>
+                        <input type="text" value={cpf} onChange={e => setCpf(e.target.value)} />
 
-                </div>
-            }
+                        <label> Email </label>
+                        <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
 
-            {alterCliente &&
+                        <button type="submit"> Alterar </button>
 
-                <form onSubmit={(e) => {
-                    setAlterarCliente(!alterCliente);
-                    alterarCliente(e);
+
+                    </form>
 
                 }
-                }>
 
-
-                    <label>Nome </label>
-                    <input type="text" value={nome} onChange={e => setNome(e.target.value)} />
-
-                    <label> Usuario </label>
-                    <input type="text" value={usuario} onChange={e => setUsuario(e.target.value)} />
-
-                    <label> Cpf </label>
-                    <input type="text" value={cpf} onChange={e => setCpf(e.target.value)} />
-
-                    <label> Email </label>
-                    <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
-
-                    <button type="submit"> Alterar </button>
-
-
-                </form>
-
-            }
-
-        </Container>
-
+            </Container>
+        </>
     )
 
 }

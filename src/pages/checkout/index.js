@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { FiCheckCircle } from 'react-icons/fi'
 import api from '../../services/api'
+import Header from '../../components/header'
 
 import { Container } from './style'
 
@@ -36,7 +37,7 @@ const Checkout = (props) => {
                 history.push('/')
                 return;
             }
-            
+
             if (checkout) {
                 cart.map(async (product) => {
                     await api.put(`produto/${product.id}`, {
@@ -50,7 +51,7 @@ const Checkout = (props) => {
                         "nomeFuncionario": product.nomeFuncionario,
                     })
                 })
-                
+
                 localStorage.removeItem("@AMAZONIA:cart")
                 setCompraFinalizada(true);
             }
@@ -84,14 +85,17 @@ const Checkout = (props) => {
 
 
     return (
-        compraFinalizada ?
-            <Container>
-                <FiCheckCircle size='200px' />
-                <h1>Compra finalizada com sucesso!</h1>
-            </Container>
-            : <>
+        <>
+            <Header />
+            {compraFinalizada ?
+                <Container>
+                    <FiCheckCircle size='200px' />
+                    <h1>Compra finalizada com sucesso!</h1>
+                </Container>
+                : <>
 
-            </>
+                </>}
+        </>
     )
 }
 

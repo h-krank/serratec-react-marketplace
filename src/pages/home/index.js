@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Container, Produto, ProductSection, Info } from './style';
 
 import api from '../../services/api'
+import Header from '../../components/header'
 
 const Home = () => {
     const [products, setProducts] = useState(['']);
@@ -26,6 +27,7 @@ const Home = () => {
 
     return (
         <Container>
+            <Header />
             <ProductSection>
                 
                 {!products.length ? "Nenhum produto encontrado :(" :

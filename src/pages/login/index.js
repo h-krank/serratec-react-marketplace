@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import api from '../../services/api'
 
 import { Form } from './style'
+import Header from '../../components/header'
 
 
 const Login = () => {
@@ -46,44 +47,48 @@ const Login = () => {
 
 
     return (
-        <Form>
-            <h3>Criar conta</h3>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor={'name'}>Nome</label>
-                <input
-                    type="text"
-                    id='name'
-                    value={name}
-                    onChange={e => setName(e.target.value)} />
+        <>
 
-                <label htmlFor={'user'}>Usuário</label>
-                <input
-                    type="text"
-                    id='user'
-                    value={user}
-                    onChange={e => setUser(e.target.value)} />
+            <Header />
+            <Form>
+                <h3>Criar conta</h3>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor={'name'}>Nome</label>
+                    <input
+                        type="text"
+                        id='name'
+                        value={name}
+                        onChange={e => setName(e.target.value)} />
 
-                <label htmlFor={'cpf'}>CPF</label>
-                <input
-                    type="text"
-                    id='cpf'
-                    value={cpf}
-                    onChange={e => setCpf(e.target.value)} />
+                    <label htmlFor={'user'}>Usuário</label>
+                    <input
+                        type="text"
+                        id='user'
+                        value={user}
+                        onChange={e => setUser(e.target.value)} />
 
-                <label htmlFor={'email'}>Email</label>
-                <input
-                    type="email"
-                    id='email'
-                    value={email}
-                    onChange={e => setEmail(e.target.value)} />
+                    <label htmlFor={'cpf'}>CPF</label>
+                    <input
+                        type="text"
+                        id='cpf'
+                        value={cpf}
+                        onChange={e => setCpf(e.target.value)} />
+
+                    <label htmlFor={'email'}>Email</label>
+                    <input
+                        type="email"
+                        id='email'
+                        value={email}
+                        onChange={e => setEmail(e.target.value)} />
 
 
 
 
 
-                <button type="submit">Enviar</button>
-            </form>
-        </Form>
+                    <button type="submit">Enviar</button>
+                </form>
+            </Form>
+        </>
     )
 
 }

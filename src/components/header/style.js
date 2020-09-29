@@ -72,4 +72,23 @@ export const Container = styled.div`
             color: #FB9A01;
         }
     }
+
+
+
+    div {
+        display: flex;
+        margin-top: 10px;
+
+        p {
+        
+            font-size: 13px;
+        }
+
+        svg {
+
+            margin-left: 5px;
+
+        }
+        
+    }
 ` 

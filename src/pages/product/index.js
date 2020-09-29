@@ -4,6 +4,7 @@ import { Container, Compra } from './style'
 import Product from '../../components/product'
 
 import api from '../../services/api'
+import Header from '../../components/header'
 
 const ProductPage = () => {
     const [product, setProduct] = useState('');
@@ -41,19 +42,21 @@ const ProductPage = () => {
 
     const inCart = (id) => {
         let cart = JSON.parse(localStorage.getItem('@AMAZONIA:cart'));
-        
+
         if (!cart)
             cart = []
 
         return (cart.some(product => product.id === id))
     }
-    
+
     function convertPrice(value) {
         return Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
     }
 
     return (
-        notFound ? <span style={{margin: '20px'}}>Produto não encontrado :(</span> :
+        <>
+        <Header />
+            {notFound ? <span style={{ margin: '20px' }}>Produto não encontrado :(</span> :
             <Container>
                 <Product product={product} />
 
@@ -61,13 +64,13 @@ const ProductPage = () => {
                     <p id='parcela'>
                         12x sem juros de <strong>{convertPrice(product.valor / 12)}</strong>
                     </p>
-                    
-                    <p style={{fontSize: '10px'}}>{inCart(product.id) ? 'Produto já adicionado' : ''}</p>
+
+                    <p style={{ fontSize: '10px' }}>{inCart(product.id) ? 'Produto já adicionado' : ''}</p>
                     <div>
                         <Link to='/cart'>
                             <button disabled={product.qtdEstoque < 1} onClick={addToCart}>
                                 {inCart(product.id) ? 'Atualizar Carrinho' : 'Adicionar ao carrinho'}
-                        </button>
+                            </button>
                         </Link>
                         <input
                             id='qtdProduto'
@@ -78,10 +81,11 @@ const ProductPage = () => {
                             disabled={product.qtdEstoque < 1}
                             onChange={e => setQtdProduto(e.target.value)}
                             placeholder='qtd' />
-                            <p>Quantidade em estoque: {product.qtdEstoque > 0 ? product.qtdEstoque : 'Indisponivel'}</p>
+                        <p>Quantidade em estoque: {product.qtdEstoque > 0 ? product.qtdEstoque : 'Indisponivel'}</p>
                     </div>
                 </Compra>
-            </Container>
+            </Container>}
+        </>
     )
 
 }

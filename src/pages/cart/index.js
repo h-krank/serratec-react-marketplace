@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiX, FiChevronUp, FiChevronDown, FiShoppingCart } from 'react-icons/fi'
+import Header from '../../components/header'
 
 import { Container, CartInfo, Item, Empty } from './style'
 
@@ -63,8 +64,11 @@ const Cart = () => {
     }, [])
 
     return (
-        carrinho.length > 0 ?
+        <>
+            <Header />
+        {carrinho.length > 0 ?
             <Container>
+
                 {carrinho.map(product => (
                     <>
                         <Item>
@@ -97,8 +101,8 @@ const Cart = () => {
                     }}><button>Finalizar compra</button>
                     </Link>
                     <CartInfo>
-                    <Link to="/home"><button>Continuar Comprando</button></Link>
-                    </CartInfo> 
+                        <Link to="/home"><button>Continuar Comprando</button></Link>
+                    </CartInfo>
                 </CartInfo>
 
             </Container>
@@ -106,7 +110,8 @@ const Cart = () => {
                 <FiShoppingCart size="200" />
                 <p>Carrinho vazio</p>
                 <Link to='/home'><button>Voltar para loja</button></Link>
-            </Empty>
+                </Empty> }
+        </>
     )
 }
 

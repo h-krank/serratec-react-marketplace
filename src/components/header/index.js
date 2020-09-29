@@ -12,6 +12,11 @@ const Header = () => {
     const history = useHistory();
     const [query, setQuery] = useState('');
 
+    const getUser = () => {
+        let user = JSON.parse(localStorage.getItem('@AMAZONIA:user'))
+        return user
+    }
+
     return (
         <>
             <Container>
@@ -32,16 +37,30 @@ const Header = () => {
                 </form>
 
                 <ul>
+                    {getUser() ?
+                        <li>
+                            <Link to='/cliente'>
+                                <div>
+                                    <p>Bem vindo: {getUser().nome}</p> 
+                                    <FiUser size='13' />
+
+                                </div>
+                            </Link>
+                        </li> : <></>}
                     <li>
-                        <Link to='/cart'> <MdShoppingCart /></Link>
-                    </li>
+                    <Link to='/cart'> <MdShoppingCart /></Link>
+                </li>
+                {getUser() ?
                     <li onClick={() => localStorage.removeItem("@AMAZONIA:user")}>
+                        <Link to='/'><ImExit /></Link>
+                    </li> :
+                    <li>
                         <Link to='/'><FiUser /></Link>
-                    </li>
+                    </li>}
 
                 </ul>
 
-            </Container>
+        </Container>
         </>
     )
 

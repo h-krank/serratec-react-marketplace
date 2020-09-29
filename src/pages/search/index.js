@@ -5,13 +5,14 @@ import { FiX } from 'react-icons/fi'
 import api from '../../services/api'
 
 import { Container, Filter, Blur, Price, PriceActive, ProductSection } from './style';
+import Header from '../../components/header'
 
 const Search = () => {
   const history = useHistory();
   const [products, setProducts] = useState(['']);
   const [filteredProducts, setFilteredProducts] = useState([''])
   const [categories, setCategories] = useState([]);
-  
+
   const [filters, setFilters] = useState([]);
   const [activePriceFilter, setActivePriceFilter] = useState(false);
   const [minValue, setMinValue] = useState();
@@ -51,7 +52,7 @@ const Search = () => {
             product.valor <= maxValue && product.valor >= minValue
           ))
         }
-      } catch (error){
+      } catch (error) {
         console.log(error)
       }
 
@@ -87,76 +88,78 @@ const Search = () => {
   }
 
   return (
-    <Container>
-      <Filter>
-        <h2>Filtros</h2>
-        <h4>Categorias</h4>
-        {categories.map(category => (
+    <>
+      <Header />
+      <Container>
+        <Filter>
+          <h2>Filtros</h2>
+          <h4>Categorias</h4>
+          {categories.map(category => (
 
-          <div key={category.id} >
-            <input
-              onClick={e => addFilter(e.target)}
-              type="checkbox"
-              id={category.id}
-              value={category.nome} />
-            <label htmlFor={category.id}>{category.nome}</label>
-          </div>
-        ))}
-
-        <h4>Preço</h4>
-        {!activePriceFilter ?
-          <Price>
-            <input
-              type="number"
-              value={minValue}
-              min='0'
-              max={maxValue}
-              onChange={e => setMinValue(e.target.value)}
-              placeholder="min"
-            />
-            <input
-              type="number"
-              value={maxValue}
-              min={minValue ? minValue : 0}
-              onChange={e => setMaxValue(e.target.value)}
-              placeholder="max"
-            />
-            <input
-              type="button"
-              value="Aplicar"
-              onClick={() => minValue && maxValue && setActivePriceFilter(true)}
-            />
-          </Price> :
-          <PriceActive>
-            de {convertPrice(minValue)} até {convertPrice(maxValue)}
-            <div onClick={() => {
-              setMinValue();
-              setMaxValue();
-              setActivePriceFilter(false)
-            }} >
-              <FiX /><span>remover</span>
+            <div key={category.id} >
+              <input
+                onClick={e => addFilter(e.target)}
+                type="checkbox"
+                id={category.id}
+                value={category.nome} />
+              <label htmlFor={category.id}>{category.nome}</label>
             </div>
+          ))}
+
+          <h4>Preço</h4>
+          {!activePriceFilter ?
+            <Price>
+              <input
+                type="number"
+                value={minValue}
+                min='0'
+                max={maxValue}
+                onChange={e => setMinValue(e.target.value)}
+                placeholder="min"
+              />
+              <input
+                type="number"
+                value={maxValue}
+                min={minValue ? minValue : 0}
+                onChange={e => setMaxValue(e.target.value)}
+                placeholder="max"
+              />
+              <input
+                type="button"
+                value="Aplicar"
+                onClick={() => minValue && maxValue && setActivePriceFilter(true)}
+              />
+            </Price> :
+            <PriceActive>
+              de {convertPrice(minValue)} até {convertPrice(maxValue)}
+              <div onClick={() => {
+                setMinValue();
+                setMaxValue();
+                setActivePriceFilter(false)
+              }} >
+                <FiX /><span>remover</span>
+              </div>
 
 
-          </PriceActive>
-        }
-      </Filter>
+            </PriceActive>
+          }
+        </Filter>
 
-      <ProductSection>
-        <p><strong>Busca: </strong>{searchQuery.join(' ')}</p>
-        {!filteredProducts.length ? <span>Nenhum produto encontrado :( </span> :
-          filteredProducts.map(product => (
-            <Blur >
-              <Product key={product.id} product={product} />
-              {product.qtdEstoque < 1 && <p id='unavailable'>Produto indisponivel</p>}
-              <hr style={{ color: '#eee' }} />
-            </Blur>
-          )
-          )
-        }
-      </ProductSection>
-    </Container>
-
+        <ProductSection>
+          <p><strong>Busca: </strong>{searchQuery.join(' ')}</p>
+          {!filteredProducts.length ? <span>Nenhum produto encontrado :( </span> :
+            filteredProducts.map(product => (
+              <Blur >
+                <Product key={product.id} product={product} />
+                {product.qtdEstoque < 1 && <p id='unavailable'>Produto indisponivel</p>}
+                <hr style={{ color: '#eee' }} />
+              </Blur>
+            )
+            )
+          }
+        </ProductSection>
+      </Container>
+    </>
   )
 }
 

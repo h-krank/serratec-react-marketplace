@@ -4,6 +4,7 @@ import { FiDelete, FiEdit } from "react-icons/fi";
 
 
 import { Funcionarios, Container, Form, CriarFuncionario } from './style'
+import Header from '../../../components/header'
 
 const Funcionario = () => {
     const [funcionarios, setFuncionarios] = useState([]);
@@ -66,6 +67,8 @@ const Funcionario = () => {
     }
 
     return (
+        <>
+        <Header />
         <Container>
             <Form>
                 <button onClick={() => setCriarFuncionario(!criarFuncionario)}>Administrar Funcionario</button>
@@ -99,6 +102,7 @@ const Funcionario = () => {
                 </Funcionarios>
             ))}
         </Container>
+        </>
     )
 
 }
