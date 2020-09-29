@@ -1,6 +1,5 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom'
-import {Container} from './style'
+import { Switch, Route } from 'react-router-dom'
 import Search from "../pages/search"
 import Home from "../pages/home"
 import Login from "../pages/login"
@@ -15,23 +14,22 @@ import Cliente from '../pages/cliente'
 
 
 const Routes = () => (
-    <Container>
-         <Switch>
-        <Route path="/" component={Login} exact/>
-        <Route path="/home" component={Home}/>
-        <Route path="/search" component={Search}/>
-        <Route path="/product" component={ProductPage}/>
-        <Route path="/dashboard/" component={Dashboard} exact/>
-        <Route path="/dashboard/categoria" component={Categoria}/>
-        <Route path="/dashboard/funcionario" component={Funcionario}/>
+
+    <Switch>
+        <Route path="/" component={Login} exact />
+        <Route path="/home" component={Home} />
+        <Route path="/search" component={Search} />
+        <Route path="/product" component={ProductPage} />
+        <Route path="/dashboard/" component={Dashboard} exact />
+        <Route path="/dashboard/categoria" component={Categoria} />
+        <Route path="/dashboard/funcionario" component={Funcionario} />
         <Route path="/dashboard/produto" component={Produto} />
-        <Route path="/cart" component={Cart}/>
+        <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/cliente" component={Cliente} />
     </Switch>
 
-    </Container>
-  
+
 )
 
 

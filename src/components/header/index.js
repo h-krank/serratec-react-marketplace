@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 import logoImg from '../../assets/amazonia-white.png'
-import { Container} from './style'
-import { FiSearch } from 'react-icons/fi';
+import { Container } from './style'
+import { FiSearch, FiUser } from 'react-icons/fi';
 import { MdShoppingCart } from 'react-icons/md'
 import { ImExit } from 'react-icons/im'
 
@@ -23,20 +23,20 @@ const Header = () => {
                         search: query.split(' ').join('&')
                     })
                     setQuery('');
-                    }}>
-                    <input 
-                        type="text" 
+                }}>
+                    <input
+                        type="text"
                         value={query}
-                        onChange={e => setQuery(e.target.value)}/>
-                    <button><FiSearch/></button>
+                        onChange={e => setQuery(e.target.value)} />
+                    <button><FiSearch /></button>
                 </form>
 
                 <ul>
                     <li>
-                    <Link to='/cart' onClick={() => localStorage.removeItem('@AMAZONIA:user')}> <MdShoppingCart /></Link>
+                        <Link to='/cart'> <MdShoppingCart /></Link>
                     </li>
                     <li onClick={() => localStorage.removeItem("@AMAZONIA:user")}>
-                    <Link to='/'><ImExit /></Link>
+                        <Link to='/'><FiUser /></Link>
                     </li>
 
                 </ul>

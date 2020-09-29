@@ -2,12 +2,10 @@ import styled from 'styled-components'
 
 
 
-export const Container = styled.div
-
-
-    `background-color: #131921;
-     margin-top: auto;
-     text-color: #ccc;
+export const Container = styled.div`
+    background-color: #131921;
+     margin-top: 200px;
+     padding-top: 10px;
      color: #ff8c00;
      font-size:14px;
      text-align: center;
@@ -36,5 +34,5 @@ export const Container = styled.div
 
     }
     
-    `
-    
+`
+
