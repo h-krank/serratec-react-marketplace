@@ -33,7 +33,7 @@ const Header = () => {
 
                 <ul>
                     <li>
-                    <Link to='/cart'> <MdShoppingCart /></Link>
+                    <Link to='/cart' onClick={() => localStorage.removeItem('@AMAZONIA:user')}> <MdShoppingCart /></Link>
                     </li>
                     <li onClick={() => localStorage.removeItem("@AMAZONIA:user")}>
                     <Link to='/'><ImExit /></Link>

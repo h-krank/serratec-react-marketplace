@@ -10,6 +10,10 @@ export const Form = styled.div`
         margin-bottom: 20px;
     }
 
+    h3 {
+        margin-bottom: 30px;
+    }
+
 `
 
 export const Address = styled.div`

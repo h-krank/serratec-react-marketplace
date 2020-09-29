@@ -47,6 +47,7 @@ const Login = () => {
 
     return (
         <Form>
+            <h3>Criar conta</h3>
             <form onSubmit={handleSubmit}>
                 <label htmlFor={'name'}>Nome</label>
                 <input

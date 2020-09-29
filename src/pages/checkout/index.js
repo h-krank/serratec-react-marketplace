@@ -10,6 +10,7 @@ const Checkout = (props) => {
     const [cart, setCart] = useState([]);
     const [compraFinalizada, setCompraFinalizada] = useState(false);
 
+    const user = JSON.parse(localStorage.getItem('@AMAZONIA:user'))
     let checkout = false;
 
     try {
@@ -26,7 +27,16 @@ const Checkout = (props) => {
         }, [])
 
     const updateProducts = useCallback(
+
         async () => {
+
+            try {
+                console.log(user.nome)
+            } catch (error) {
+                history.push('/')
+                return;
+            }
+            
             if (checkout) {
                 cart.map(async (product) => {
                     await api.put(`produto/${product.id}`, {
@@ -40,17 +50,15 @@ const Checkout = (props) => {
                         "nomeFuncionario": product.nomeFuncionario,
                     })
                 })
-
+                
                 localStorage.removeItem("@AMAZONIA:cart")
                 setCompraFinalizada(true);
             }
-        }, [cart, checkout])
+        }, [cart, checkout, history])
 
 
     const getData = useCallback(
         async () => {
-            const user = JSON.parse(localStorage.getItem('@AMAZONIA:user'));
-
             if (compraFinalizada) {
 
                 await api.post('/pedido', {
@@ -65,7 +73,7 @@ const Checkout = (props) => {
     useEffect(() => {
         getData();
     }, [compraFinalizada, getData])
-    
+
     useEffect(() => {
         getCart();
     }, [getCart])
