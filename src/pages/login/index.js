@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import api from '../../services/api'
 
-import { Form, Address } from './style'
+import { Form } from './style'
 
 
 const Login = () => {
@@ -33,11 +33,11 @@ const Login = () => {
             }
         }
 
-        console.log(JSON.stringify(cliente))
-
         try {
-            await api.post('cliente', cliente);
-            localStorage.setItem('@AMAZONIA:user', JSON.stringify(cliente));
+            await api.post('cliente', cliente)
+                .then((response) =>
+                    localStorage.setItem('@AMAZONIA:user', JSON.stringify(response.data)));
+            ;
             history.push('/home');
         } catch (error) {
             console.log('handleSubmitError', error)
