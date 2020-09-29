@@ -18,7 +18,7 @@ export const Produto = styled.div `
 
     a {
         text-decoration: none;
-        color: black;
+        color: #ccc;
     }
 
 `

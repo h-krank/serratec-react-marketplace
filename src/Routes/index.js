@@ -1,6 +1,6 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom'
-
+import {Container} from './style'
 import Search from "../pages/search"
 import Home from "../pages/home"
 import Login from "../pages/login"
@@ -14,7 +14,8 @@ import Checkout from '../pages/checkout'
 
 
 const Routes = () => (
-    <Switch>
+    <Container>
+         <Switch>
         <Route path="/" component={Login} exact/>
         <Route path="/home" component={Home}/>
         <Route path="/search" component={Search}/>
@@ -26,6 +27,9 @@ const Routes = () => (
         <Route path="/cart" component={Cart}/>
         <Route path="/checkout" component={Checkout} />
     </Switch>
+
+    </Container>
+  
 )
 
 

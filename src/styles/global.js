@@ -10,7 +10,9 @@ export default createGlobalStyle`
     }
     
     html, body, #root{
-        height: 100%;  
+        height: 100%; 
+        display: flex;
+        flex-direction: column; 
     }
 
     body, input, button{
